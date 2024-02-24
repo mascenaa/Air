@@ -1,0 +1,36 @@
+# Next.js
+node_modules/
+.next/
+out/
+
+# Spring Boot
+target/
+build/
+bin/
+logs/
+*.log
+*.log.*
+!application.properties
+!application.yml
+!application.yaml
+!bootstrap.properties
+!bootstrap.yml
+!bootstrap.yaml
+!logback-spring.xml
+!logback.xml
+!logging.properties
+!application-{profile}.properties
+!application-{profile}.yml
+!application-{profile}.yaml
+!bootstrap-{profile}.properties
+!bootstrap-{profile}.yml
+!bootstrap-{profile}.yaml
+
+# Env
+.env
+.env.test
+.env.local
+.env.development
+
+
+
