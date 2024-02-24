@@ -1,0 +1,9 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER=root
+ENV POSTGRES_PASSWORD=root
+ENV POSTGRES_DB=airdb
+
+EXPOSE 5432
+
+CMD ["postgres"] 
