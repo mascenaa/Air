@@ -1,3 +1,5 @@
+-- Schema of AIR DATABASE
+
 CREATE TABLE aeroportos (
     id SERIAL PRIMARY KEY, nome VARCHAR(255), cidade VARCHAR(255), pais VARCHAR(255), codigo_iata VARCHAR(3)
 );
