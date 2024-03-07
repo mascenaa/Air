@@ -1,4 +1,4 @@
-version: '8'
+version: '3.1'
 services:
   backend:
     build: ./backend
