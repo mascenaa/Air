@@ -39,7 +39,6 @@ public class UserController {
            * "nome": "João Mascena",
            * "passagens_favoritas": [],
            * "senha": "*************"
-           * 
            */
 
           logger.info("Nome: {}", user.getNome());
