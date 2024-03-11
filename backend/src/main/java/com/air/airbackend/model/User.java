@@ -1,5 +1,7 @@
 package com.air.airbackend.model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +30,7 @@ public class User {
      public User(String nome, String email, String senha) {
           this.nome = nome;
           this.email = email;
-          this.senha = senha;
+          this.senha = hashSenha(senha);
           this.passagensFavoritas = new UUID[0];
      }
 
@@ -61,7 +63,7 @@ public class User {
      }
 
      public void setSenha(String senha) {
-          this.senha = senha;
+          this.senha = hashSenha(senha);
      }
 
      public UUID[] getPassagensFavoritas() {
@@ -89,5 +91,20 @@ public class User {
                }
           }
           this.passagensFavoritas = list.toArray(new UUID[0]);
+     }
+
+     private String hashSenha(String senha) {
+          try {
+               MessageDigest md = MessageDigest.getInstance("SHA-256");
+               byte[] hash = md.digest(senha.getBytes());
+               StringBuilder sb = new StringBuilder();
+               for (byte b : hash) {
+                    sb.append(String.format("%02x", b));
+               }
+               return sb.toString();
+          } catch (NoSuchAlgorithmException e) {
+               e.printStackTrace();
+               return senha;
+          }
      }
 }
