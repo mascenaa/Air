@@ -90,4 +90,5 @@ public class User {
           }
           this.passagensFavoritas = list.toArray(new UUID[0]);
      }
+
 }

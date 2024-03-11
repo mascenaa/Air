@@ -6,6 +6,5 @@ ENV POSTGRES_DB=airdb
 
 EXPOSE 5432
 
-VOLUME [ "/backend/database_schema.sql" ]
 
 CMD ["postgres"] 
