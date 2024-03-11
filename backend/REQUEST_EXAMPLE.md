@@ -13,6 +13,11 @@ Neste documento, apresentamos exemplos detalhados de consultas e os principais e
 GET localhost:8080/api/v1/user
 ```
 
+#### Obter um usuário específico 
+```bash
+GET localhost:8080/api/v1/user/{id}
+```
+
 ------
 
 #### Cadastrar um user no banco de dados
@@ -29,4 +34,17 @@ POST localhost:8080/api/v1/user
      "senha": "*************"
 }
 ```
+
+----
+
+#### Atualizar senha do usuário
+```bash
+PUT localhost:8080/api/v1/user/password/{id}
+```
+```json
+{
+     "senha": "nova_senha"
+}
+```
+
 
