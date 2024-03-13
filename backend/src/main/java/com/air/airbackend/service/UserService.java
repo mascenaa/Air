@@ -44,4 +44,8 @@ public class UserService {
           return userRepository.save(existingUser);
      }
 
+     public User authUser(String email, String senha) {
+          return userRepository.findByEmailAndSenha(email, senha);
+     }
+
 }

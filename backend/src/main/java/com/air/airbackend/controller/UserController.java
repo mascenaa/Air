@@ -46,13 +46,29 @@ public class UserController {
      }
 
      @PostMapping
-     public String addUser(@RequestBody User user) {
-          logger.info("Nome: {}", user.getNome());
-          logger.info("Email: {}", user.getEmail());
-          logger.info("Senha: {}", user.getSenha());
+     public ResponseEntity<String> addUser(@RequestBody User user) {
+          List<User> users = userService.getUsers();
+          boolean userExists = users.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
+          if (userExists) {
+               logger.info("Usuário já existe!");
+               return ResponseEntity.badRequest().body("Usuário já existe!");
+          }
+
           userService.saveUser(user);
 
-          return "Usuário cadastrado com sucesso!";
+          return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+     }
+
+     @PostMapping("/auth")
+     public ResponseEntity<Object> authUser(@RequestBody User user) {
+          user = userService.authUser(user.getEmail(), user.getSenha());
+
+          if (user == null) {
+               logger.info("Usuário não encontrado!");
+               return ResponseEntity.notFound().build();
+          }
+
+          return ResponseEntity.ok(user);
      }
 
      @PutMapping("/password/{id}")
@@ -65,7 +81,6 @@ public class UserController {
           userToUpdate.setSenha(user.getSenha());
           userService.saveUser(userToUpdate);
           return ResponseEntity.ok(userToUpdate);
-
      }
 
 }

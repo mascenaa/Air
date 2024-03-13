@@ -48,3 +48,14 @@ PUT localhost:8080/api/v1/user/password/{id}
 ```
 
 
+### Rota de autenticação 
+```bash
+POST localhost:8080/api/v1/user/auth
+```
+```json
+{
+     "email": "joao@dev.com",
+     "senha": "*************"
+}
+```
+
