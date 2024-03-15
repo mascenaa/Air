@@ -9,7 +9,7 @@ conn = psycopg2.connect(
      password="root"
 )
 
-with open('./data/airports.csv', 'r', encoding='utf-8') as file:
+with open('webscrapping/data/airports.csv', 'r', encoding='utf-8') as file:
      reader = csv.reader(file)
      for row in reader:
           if (row[2] == 'medium_airport' or row[2] == 'large_airport') and row[13] != '':
