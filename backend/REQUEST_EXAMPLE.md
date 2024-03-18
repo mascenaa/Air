@@ -59,3 +59,4 @@ POST localhost:8080/api/v1/user/auth
 }
 ```
 
+### Manipulação de aeroportos
