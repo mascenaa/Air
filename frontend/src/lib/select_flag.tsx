@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import flags from "./imports_flag"
 
 interface ComponentSVGCountryProps {
      country: string;
@@ -11,11 +12,11 @@ function ComponentSVGCountry(props: ComponentSVGCountryProps): JSX.Element {
      switch (country) {
           case "BR":
                return (
-                    <img
-                         src={ }
+                    <Image
+                         src={flags[country]}
                          alt="Brazil"
-                         width={30}
-                         height={30}
+                         width={5}
+                         height={5}
                     />
                );
           default:
