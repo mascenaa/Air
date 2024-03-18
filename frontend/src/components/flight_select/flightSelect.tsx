@@ -30,60 +30,83 @@ export default function FlightSelect() {
      }
 
      return (
-          <div className="bg-white flex text-black w-fit gap-10 mx-auto p-5 rounded-lg items-center ">
+          <div className="bg-white flex text-black w-fit gap-10 mx-auto p-5 rounded-lg items-center justify-center">
                <div>
-                    <h3>From</h3>
+                    <h3 className="text-sm font-bold">De</h3>
                     <Select>
-                         <SelectTrigger className="border-0">
-                              <SelectValue placeholder="Selecione sua partida" />
+                         <SelectTrigger className="border-0 w-fit p-0">
+                              <SelectValue className="text-sm" placeholder="Selecione sua partida" />
                          </SelectTrigger>
-                         <SelectContent className="bg-white text-black">
+                         <SelectContent className="bg-white text-black gap-2">
                               <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
-                              <SelectItem value="city1" className="">
-                                   <ComponentSVGCountry country="BR" />
-                                   São Paulo, Brasil - GRU
+                              <SelectItem value="city1" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="BR" />
+                                        <h4>São Paulo, Brasil - GRU</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city2" className="">
-                                   Roma, Italia - FCO
+                              <SelectItem value="city2" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="IT" />
+                                        <h4>Roma, Italia - FCO</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city3" className="">
-                                   Paris, França - CDG
+                              <SelectItem value="city3" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="FR" />
+                                        <h4>Paris, França - CDG</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city4" className="">
-                                   New York, EUA - JFK
+                              <SelectItem value="city4" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="US" />
+                                        <h4>New York, EUA - JFK</h4>
+                                   </div>
                               </SelectItem>
                          </SelectContent>
                     </Select>
                </div>
                <div>
-                    <h3>To</h3>
+                    <h3 className="text-sm font-bold">Para</h3>
                     <Select>
-                         <SelectTrigger className="border-0">
+                         <SelectTrigger className="border-0 p-0">
                               <SelectValue placeholder="Selecione seu destino" />
                          </SelectTrigger>
-                         <SelectContent className="bg-white text-black">
+                         <SelectContent className="bg-white text-black gap-2">
                               <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
-                              <SelectItem value="city1" className="">
-                                   São Paulo, Brasil - GRU
+                              <SelectItem value="city1" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="BR" />
+                                        <h4>São Paulo, Brasil - GRU</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city2" className="">
-                                   Roma, Italia - FCO
+                              <SelectItem value="city2" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="IT" />
+                                        <h4>Roma, Italia - FCO</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city3" className="">
-                                   Paris, França - CDG
+                              <SelectItem value="city3" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="FR" />
+                                        <h4>Paris, França - CDG</h4>
+                                   </div>
                               </SelectItem>
-                              <SelectItem value="city4" className="">
-                                   New York, EUA - JFK
+                              <SelectItem value="city4" className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                   <div className="flex items-center gap-2">
+                                        <ComponentSVGCountry country="US" />
+                                        <h4>New York, EUA - JFK</h4>
+                                   </div>
                               </SelectItem>
                          </SelectContent>
                     </Select>
                </div>
-               <div className="flex gap-2">
+               <div className="flex gap-5">
                     <div>
-                         <p>De</p>
+                         <p className="text-sm font-bold">De</p>
                          <Popover>
                               <PopoverTrigger asChild>
-                                   <Button>
+                                   <Button className="p-0">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                         {dateIda ? format(dateIda, "medium") : <span>Pick a date</span>}
                                    </Button>
@@ -100,10 +123,10 @@ export default function FlightSelect() {
                          </Popover>
                     </div>
                     <div>
-                         <p>Até</p>
+                         <p className="text-sm font-bold">Até</p>
                          <Popover>
                               <PopoverTrigger asChild>
-                                   <Button>
+                                   <Button className="p-0">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                         {dateVolta ? format(dateVolta, "medium") : <span>Pick a date</span>}
                                    </Button>

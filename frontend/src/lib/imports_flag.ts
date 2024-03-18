@@ -250,7 +250,7 @@ import ZM from '@/assets/zm.png'
 import ZW from '@/assets/zw.png'
 
 
-const flags = {
+const flags : any = {
      "AD": AD,
      "AE": AE,
      "AF": AF,

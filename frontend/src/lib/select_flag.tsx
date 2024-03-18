@@ -9,19 +9,19 @@ interface ComponentSVGCountryProps {
 function ComponentSVGCountry(props: ComponentSVGCountryProps): JSX.Element {
      const { country } = props;
 
-     switch (country) {
-          case "BR":
-               return (
-                    <Image
-                         src={flags[country]}
-                         alt="Brazil"
-                         width={5}
-                         height={5}
-                    />
-               );
-          default:
-               return <></>;
-     }
+
+     return (
+          <div>
+               <Image
+                    src={flags[country]}
+                    alt="Brazil"
+                    width={20}
+                    height={20}
+               />
+          </div>
+
+     );
+
 }
 
 export default ComponentSVGCountry;
