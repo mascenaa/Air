@@ -7,6 +7,5 @@ import com.air.airbackend.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
      User findByEmailAndSenha(String email, String senha);
 }
