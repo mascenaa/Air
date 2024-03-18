@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
      Select,
      SelectContent,
@@ -23,11 +23,25 @@ export default function FlightSelect() {
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
 
+     const [aeroportos, setAeroportos] = useState([])
+
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
           return new Intl.DateTimeFormat("en-US", {
                dateStyle: format,
           }).format(date);
      }
+
+     useEffect(() => {
+          async function getAeroportos() {
+               const response = await fetch("http://localhost:8080/api/v1/aeroportos")
+               const data = await response.json()
+               setAeroportos(data.slice(0, 10))
+          }
+          getAeroportos()
+
+          console.log(aeroportos)
+     }, [])
+
 
      return (
           <div className="bg-white flex text-black w-fit gap-10 mx-auto p-5 rounded-lg items-center justify-center">
