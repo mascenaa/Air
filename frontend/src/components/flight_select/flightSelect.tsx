@@ -25,7 +25,7 @@ export default function FlightSelect() {
 
      const [search, setSearch] = useState<string>("")
 
-     const [aeroportos, setAeroportos] = useState([])
+     const [aeroportos, setAeroportos] = useState<any>([])
 
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
           return new Intl.DateTimeFormat("en-US", {
@@ -33,28 +33,39 @@ export default function FlightSelect() {
           }).format(date);
      }
 
+     async function getAeroportos() {
+          const response = await fetch("http://localhost:8080/api/v1/aeroportos")
+          const data = await response.json()
+          setAeroportos(data.slice(0, 7))
+     }
+
      useEffect(() => {
-          async function getAeroportos() {
-               const response = await fetch("http://localhost:8080/api/v1/aeroportos")
-               const data = await response.json()
-               setAeroportos(data.slice(0, 5))
-          }
           getAeroportos()
      }, [])
 
      useEffect(() => {
-          function getSearchAeroporto(
+          async function getSearchAeroporto(
                search: string,
           ) {
-               // fetch(`http://localhost:8080/api/v1/aeroportos?search=${search}`)
-               //.then((response) => response.json())
-               //.then((data) => setAeroportos(data))
+               try {
+                    fetch(`http://localhost:8080/api/v1/aeroportos/search/${search}`)
+                         .then((response) => response.json())
+                         .then((data: any) => new Promise((resolve) => setTimeout(() => resolve(data), 1000)))
+                         .then((data: any) => setAeroportos(data.slice(0, 5)))
+               } catch (error) {
+                    console.error("Error fetching aeroportos", error)
+               }
           }
-
-          getSearchAeroporto(search)
+          if (search != "") {
+               getSearchAeroporto(search)
+          } else {
+               getAeroportos()
+               setAeroportos([])
+          }
+          return () => {
+               setAeroportos([])
+          }
      }, [search, setAeroportos])
-
-     console.log(aeroportos)
 
      return (
           <div className="bg-white flex text-black w-fit gap-10 mx-auto p-5 rounded-lg items-center justify-center">
@@ -64,17 +75,21 @@ export default function FlightSelect() {
                          <SelectTrigger className="border-0 w-fit p-0">
                               <SelectValue className="text-sm" placeholder="Selecione sua partida" />
                          </SelectTrigger>
-                         <SelectContent className="bg-white text-black gap-2">
-                              <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
+                         <SelectContent className="bg-white text-black gap-2 relative">
+                              <Input
+                                   type="text"
+                                   placeholder="Digite o seu aeroporto favorito"
+                                   onChange={(e) => setSearch(e.target.value)}></Input>
                               {
-                                   aeroportos.map((aeroporto: any) => (
-                                        <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                             <div className="flex items-center gap-2">
-                                                  <ComponentSVGCountry country={aeroporto.pais} />
-                                                  <h4>{aeroporto.nome}, {aeroporto.cidade} - {aeroporto.codigoIata}</h4>
-                                             </div>
-                                        </SelectItem>
-                                   ))
+                                   aeroportos
+                                        .map((aeroporto: any) => (
+                                             <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                  <div className="flex items-center gap-2">
+                                                       <ComponentSVGCountry country={aeroporto.pais} />
+                                                       <h4>{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                  </div>
+                                             </SelectItem>
+                                        ))
                               }
                          </SelectContent>
                     </Select>
@@ -86,7 +101,10 @@ export default function FlightSelect() {
                               <SelectValue placeholder="Selecione seu destino" />
                          </SelectTrigger>
                          <SelectContent className="bg-white text-black gap-2">
-                              <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
+                              <Input
+                                   type="text"
+                                   placeholder="Digite o seu aeroporto favorito"
+                              ></Input>
                               {
                                    aeroportos.map((aeroporto: any) => (
                                         <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">

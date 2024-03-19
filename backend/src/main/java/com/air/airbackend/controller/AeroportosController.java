@@ -44,4 +44,10 @@ public class AeroportosController {
           return ResponseEntity.ok(aeroportos);
      }
 
+     @GetMapping("/search/{search}")
+     public ResponseEntity<List<Aeroportos>> getAeroportosBySearch(@PathVariable String search) {
+          List<Aeroportos> aeroportos = AeroportosService.getAeroportosBySearch(search.toUpperCase());
+          return ResponseEntity.ok(aeroportos);
+     }
+
 }

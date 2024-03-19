@@ -14,9 +14,8 @@ function ComponentSVGCountry(props: ComponentSVGCountryProps): JSX.Element {
           <div>
                <Image
                     src={flags[country]}
-                    alt="Brazil"
-                    width={20}
-                    height={20}
+                    alt=""
+                    className="w-5 h-3"
                />
           </div>
 
