@@ -46,9 +46,9 @@ export default function FlightSelect() {
           function getSearchAeroporto(
                search: string,
           ) {
-               fetch(`http://localhost:8080/api/v1/aeroportos?search=${search}`)
-                    .then((response) => response.json())
-                    .then((data) => setAeroportos(data))
+               // fetch(`http://localhost:8080/api/v1/aeroportos?search=${search}`)
+               //.then((response) => response.json())
+               //.then((data) => setAeroportos(data))
           }
 
           getSearchAeroporto(search)
