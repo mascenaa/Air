@@ -16,7 +16,7 @@ export default function Home() {
             Choose <span className="font-bold">AIR</span> for an unparalleled experience.
           </h1>
 
-          <div>
+          <div className="w-9/12 mx-auto mt-16">
             <FlightSelect />
           </div>
           <div className="scale-95" style={{ position: 'relative' }}>
