@@ -5,11 +5,11 @@ conn = psycopg2.connect(
      host="localhost",
      port="5432",
      database="airdb",
-     user="root",
-     password="root"
+     user="admin",
+     password="admin"
 )
 
-with open('webscrapping/data/airports.csv', 'r', encoding='utf-8') as file:
+with open('data/airports.csv', 'r', encoding='utf-8') as file:
      reader = csv.reader(file)
      for row in reader:
           if (row[2] == 'medium_airport' or row[2] == 'large_airport') and row[13] != '':
