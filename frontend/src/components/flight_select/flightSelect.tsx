@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
      Select,
      SelectContent,
@@ -23,11 +23,25 @@ export default function FlightSelect() {
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
 
+     const [aeroportos, setAeroportos] = useState([])
+
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
           return new Intl.DateTimeFormat("en-US", {
                dateStyle: format,
           }).format(date);
      }
+
+     useEffect(() => {
+          async function getAeroportos() {
+               const response = await fetch("http://localhost:8080/api/v1/aeroportos")
+               const data = await response.json()
+               setAeroportos(data.slice(0, 5))
+          }
+          getAeroportos()
+
+     }, [])
+
+     console.log(aeroportos)
 
      return (
           <div className="bg-white flex text-black w-fit gap-10 mx-auto p-5 rounded-lg items-center justify-center">
@@ -39,30 +53,16 @@ export default function FlightSelect() {
                          </SelectTrigger>
                          <SelectContent className="bg-white text-black gap-2">
                               <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
-                              <SelectItem value="city1" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="BR" />
-                                        <h4>São Paulo, Brasil - GRU</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city2" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="IT" />
-                                        <h4>Roma, Italia - FCO</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city3" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="FR" />
-                                        <h4>Paris, França - CDG</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city4" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="US" />
-                                        <h4>New York, EUA - JFK</h4>
-                                   </div>
-                              </SelectItem>
+                              {
+                                   aeroportos.map((aeroporto: any) => (
+                                        <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                             <div className="flex items-center gap-2">
+                                                  <ComponentSVGCountry country={aeroporto.pais} />
+                                                  <h4>{aeroporto.nome}, {aeroporto.cidade} - {aeroporto.codigoIata}</h4>
+                                             </div>
+                                        </SelectItem>
+                                   ))
+                              }
                          </SelectContent>
                     </Select>
                </div>
@@ -74,30 +74,16 @@ export default function FlightSelect() {
                          </SelectTrigger>
                          <SelectContent className="bg-white text-black gap-2">
                               <Input type="text" placeholder="Digite o seu aeroporto favorito"></Input>
-                              <SelectItem value="city1" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="BR" />
-                                        <h4>São Paulo, Brasil - GRU</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city2" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="IT" />
-                                        <h4>Roma, Italia - FCO</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city3" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="FR" />
-                                        <h4>Paris, França - CDG</h4>
-                                   </div>
-                              </SelectItem>
-                              <SelectItem value="city4" className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                   <div className="flex items-center gap-2">
-                                        <ComponentSVGCountry country="US" />
-                                        <h4>New York, EUA - JFK</h4>
-                                   </div>
-                              </SelectItem>
+                              {
+                                   aeroportos.map((aeroporto: any) => (
+                                        <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                             <div className="flex items-center gap-2">
+                                                  <ComponentSVGCountry country={aeroporto.pais} />
+                                                  <h4>{aeroporto.nome}, {aeroporto.cidade} - {aeroporto.codigoIata}</h4>
+                                             </div>
+                                        </SelectItem>
+                                   ))
+                              }
                          </SelectContent>
                     </Select>
                </div>

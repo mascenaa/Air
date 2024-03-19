@@ -7,6 +7,10 @@ services:
     container_name: database-backend
     volumes:
       - $VOLUME/postgresql/air/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: airdb
 
   load_balancer:
     image: nginx
