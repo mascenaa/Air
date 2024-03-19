@@ -23,6 +23,8 @@ export default function FlightSelect() {
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
 
+     const [search, setSearch] = useState<string>("")
+
      const [aeroportos, setAeroportos] = useState([])
 
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
@@ -38,8 +40,19 @@ export default function FlightSelect() {
                setAeroportos(data.slice(0, 5))
           }
           getAeroportos()
-
      }, [])
+
+     useEffect(() => {
+          function getSearchAeroporto(
+               search: string,
+          ) {
+               fetch(`http://localhost:8080/api/v1/aeroportos?search=${search}`)
+                    .then((response) => response.json())
+                    .then((data) => setAeroportos(data))
+          }
+
+          getSearchAeroporto(search)
+     }, [search, setAeroportos])
 
      console.log(aeroportos)
 
