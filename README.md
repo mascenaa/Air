@@ -4,7 +4,7 @@
 
 <p align="center">Procurando uma viagem<br>econômica e divertida?<br>Voe conosco!</p>
 
-# Overview
+# Visão Geral
 
 <p>A AIR, abreviação para Airline Information Resource (Recurso de informações de companhias aéreas), é muito mais do que apenas mais uma plataforma de reservas de voos. Fundada com a visão de simplificar e aprimorar o planejamento de viagens aéreas para todos os tipos de viajantes, a AIR representa uma abordagem inovadora para a reserva de voos, prezando pela experiência do usuário.</p>
     
