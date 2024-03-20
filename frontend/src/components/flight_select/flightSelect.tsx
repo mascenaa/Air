@@ -62,60 +62,95 @@ export default function FlightSelect() {
      }, [search])
 
      return (
-          <div className="bg-white flex text-black w-full gap-10 mx-auto p-5 rounded-[4px] items-center justify-center">
-               <div className="w-1/2">
-                    <h3 className="text-sm font-bold">De</h3>
-                    <Select>
-                         <SelectTrigger className="border-0 w-fit p-0">
-                              <SelectValue className="text-sm" placeholder="Selecione sua partida" />
-                         </SelectTrigger>
-                         <SelectContent className="bg-white text-black gap-2 relative">
-                              <form onSubmit={(e) => {
-                                   e.preventDefault()
-                              }}>
-                                   <Input
-                                        type="text"
-                                        placeholder="Digite o seu aeroporto favorito"
-                                        onChange={(e) => setSearch(e.target.value)}></Input>
-                                   {
-                                        aeroportos.length > 0 ?
-                                             aeroportos.map((aeroporto: any) => (
-                                                  <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                       <div className="flex flex-col">
-                                                            <div className="flex items-center gap-2">
-                                                                 <ComponentSVGCountry country={aeroporto.pais} />
-                                                                 <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+          <div className="bg-white flex text-black w-full  mx-auto p-5 rounded-[4px] items-center justify-between">
+               <div className="flex gap-10 w-fit ">
+                    <div className="w-1/2">
+                         <h3 className="text-sm font-bold">De</h3>
+                         <Select>
+                              <SelectTrigger className="border-0 w-fit p-0">
+                                   <SelectValue className="text-sm" placeholder="Selecione sua partida" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white text-black gap-2 fixed w-64">
+                                   <form onSubmit={(e) => {
+                                        e.preventDefault()
+                                   }}>
+                                        <Input
+                                             type="text"
+                                             placeholder="Digite o seu aeroporto favorito"
+                                             onChange={(e) => setSearch(e.target.value)}></Input>
+                                        {
+                                             aeroportos.length > 0 ?
+                                                  aeroportos.map((aeroporto: any) => (
+                                                       <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                            <div className="flex flex-col p-2">
+                                                                 <div className="flex items-center">
+                                                                      <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                      <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                                 </div>
                                                             </div>
-                                                       </div>
-                                                  </SelectItem>
-                                             )) : (
-                                                  <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                       <div className="flex flex-col">
-                                                            <div className="flex items-center gap-2">
-                                                                 <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                       </SelectItem>
+                                                  )) : (
+                                                       <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                            <div className="flex flex-col">
+                                                                 <div className="flex items-center gap-2">
+                                                                      <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                 </div>
                                                             </div>
-                                                       </div>
-                                                  </SelectItem>
-                                             )
-
-
-
-                                   }
-                              </form>
-                         </SelectContent>
-                    </Select>
+                                                       </SelectItem>
+                                                  )
+                                        }
+                                   </form>
+                              </SelectContent>
+                         </Select>
+                    </div>
+                    <div className="w-1/2">
+                         <h3 className="text-sm font-bold">Para</h3>
+                         <Select>
+                              <SelectTrigger className="border-0 w-fit p-0">
+                                   <SelectValue className="text-sm" placeholder="Selecione sua partida" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white text-black gap-2 fixed w-64">
+                                   <form onSubmit={(e) => {
+                                        e.preventDefault()
+                                   }}>
+                                        <Input
+                                             type="text"
+                                             placeholder="Digite o seu aeroporto favorito"
+                                             onChange={(e) => setSearch(e.target.value)}></Input>
+                                        {
+                                             aeroportos.length > 0 ?
+                                                  aeroportos.map((aeroporto: any) => (
+                                                       <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                            <div className="flex flex-col p-2">
+                                                                 <div className="flex items-center">
+                                                                      <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                      <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                                 </div>
+                                                            </div>
+                                                       </SelectItem>
+                                                  )) : (
+                                                       <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                            <div className="flex flex-col">
+                                                                 <div className="flex items-center gap-2">
+                                                                      <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                 </div>
+                                                            </div>
+                                                       </SelectItem>
+                                                  )
+                                        }
+                                   </form>
+                              </SelectContent>
+                         </Select>
+                    </div>
                </div>
-               <div className="w-1/2">
-                    <h3 className="text-sm font-bold">Para</h3>
-               </div>
-               <div className="flex gap-5">
-                    <div>
+               <div className="flex gap-5 w-fit">
+                    <div className="w-1/2">
                          <p className="text-sm font-bold">De</p>
                          <Popover>
                               <PopoverTrigger asChild>
                                    <Button className="p-0">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {dateIda ? format(dateIda, "medium") : <span>Pick a date</span>}
+                                        {dateIda ? format(dateIda, "medium") : <span>Escolha uma data de ida</span>}
                                    </Button>
                               </PopoverTrigger>
                               <PopoverContent className="w-auto p-0">
@@ -129,13 +164,13 @@ export default function FlightSelect() {
                               </PopoverContent>
                          </Popover>
                     </div>
-                    <div>
+                    <div className="w-1/2">
                          <p className="text-sm font-bold">Até</p>
                          <Popover>
                               <PopoverTrigger asChild>
                                    <Button className="p-0">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {dateVolta ? format(dateVolta, "medium") : <span>Pick a date</span>}
+                                        {dateVolta ? format(dateVolta, "medium") : <span>Escolha uma data de volta</span>}
                                    </Button>
                               </PopoverTrigger>
                               <PopoverContent className="w-auto p-0">
