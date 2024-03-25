@@ -15,10 +15,23 @@ import {
 import { type CarouselApi } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
 import Map from '@/assets/maps.svg'
-import LandingMap from "@/components/maps/landingMap";
-
+import calcularCoordenadas from "@/lib/calc_routes";
 
 export default function Home() {
+
+  const aeroporto1 = { latitude: -23.6256838449846, longitude: -46.65801233873098 }; // Rio de Janeiro (SBRJ)
+  const aeroporto2 = { latitude: -22.814418605698506, longitude: -43.24673719590761 }; // Porto Alegre (SBPA)
+
+  const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
+
+  //console.log(pontosIntermediarios)
+
+  const data = [{
+    name: "random-name",
+    color: [101, 147, 245],
+    path: calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10)
+  }
+  ]
 
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -106,7 +119,6 @@ export default function Home() {
           <p className="text-center text-[#606060] mt-2">
             Curious to know where your plane is going? Check out our real-time map
           </p>
-          <LandingMap data={undefined} viewState={undefined} />
         </div>
       </div>
     </section>
