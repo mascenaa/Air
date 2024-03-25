@@ -13,8 +13,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { type CarouselApi } from "@/components/ui/carousel"
-
 import { Card, CardContent } from "@/components/ui/card"
+import Map from '@/assets/maps.svg'
+import LandingMap from "@/components/maps/landingMap";
 
 
 export default function Home() {
@@ -54,18 +55,17 @@ export default function Home() {
               <FlightSelect />
             </div>
 
-            <div className="h-fit">
+            <div>
               <Spline
-                scene="https://prod.spline.design/O51X8-O4apkus57v/scene.splinecode"
+                scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
                 renderOnDemand={true}
               />
             </div>
-
             <div style={{ position: 'absolute', top: 15, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
           </div>
         </div>
       </div>
-      <div className="h-screen p-10 flex gap-5">
+      <div className="h-fit  p-10 flex gap-5">
         <div className="flex flex-col w-1/2 justify-center gap-2">
           <h1 className="text-4xl font-bold">Find the best prices <span className="text-blue-700" >quickly</span> and <span className="text-amber-400">easily</span></h1>
           <p className="text-sm text-[#606060]">
@@ -85,9 +85,9 @@ export default function Home() {
                   <Card className="border-none">
                     <CardContent className="flex flex-col aspect-square items-center justify-center p-6 w-fit ">
                       <Image src='https://assets.vogue.in/photos/5ce41cfc4a30b3f5c612bf13/2:3/w_2560%2Cc_limit/Your-ultimate-guide-to-Tokyo-Japan1.jpg' alt="" width={300} height={300} />
-                      <div className="flex justify-between w-[300px] mt-2">
-                        <span className="text-md font-semibold">Tokyo, Japão</span>
-                        <span className="text-md font-semibold">R$ 5.530</span>
+                      <div className="flex justify-between w-[300px] mt-2 items-center">
+                        <span className="text-lg font-semibold">Tokyo, Japan</span>
+                        <span className="text-md">R$ 5.530</span>
                       </div>
                       <p className="w-[300px] text-xs mt-1 text-[#606060]">
                         Discover Tokyo, the vibrant capital of Japan! This fascinating city offers a unique blend of old and new, where ultra-modern skyscrapers meet historic temples.
@@ -98,6 +98,15 @@ export default function Home() {
               ))}
             </CarouselContent>
           </Carousel>
+        </div>
+      </div>
+      <div>
+        <div>
+          <h1 className="text-center text-3xl">Track your flight in real time</h1>
+          <p className="text-center text-[#606060] mt-2">
+            Curious to know where your plane is going? Check out our real-time map
+          </p>
+          <LandingMap data={undefined} viewState={undefined} />
         </div>
       </div>
     </section>
