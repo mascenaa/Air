@@ -17,7 +17,6 @@ import {
 import { CalendarIcon, Star } from "lucide-react";
 import ComponentSVGCountry from "@/lib/select_flag";
 
-
 export default function FlightSelect() {
 
      const [dateIda, setDateIda] = useState<Date>()
