@@ -11,13 +11,13 @@ export default function Login() {
             <div>
                 <h1 className="text-4xl font-bold p-10">AIR</h1>
             
-                <Button className="bg-white font-blak font-semibold text-black rounded-2xl w-1/4 hover:bg-gray-200">Login with Gmail</Button>
+                <Button className="bg-white font-black font-semibold text-black rounded-2xl w-1/4 hover:bg-gray-200">Login with Gmail</Button>
             </div>
             <div>
             <div className="mx-auto p-10 w-2/4">
                 <p className="text-left">Email</p>
                 <Input placeholder="" className="bg-white" />
-                <p className="text-left">Password</p>
+                <p className="text-left mt-5">Password</p>
                 <Input placeholder="" className="bg-white"/>
                 <p className="text-right ">Forget Password?</p>
                 <Button className="bg-white font-semibold text-black rounded-2xl w-full hover:bg-gray-200 mt-10 ">Login</Button>
