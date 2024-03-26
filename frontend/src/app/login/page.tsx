@@ -11,7 +11,7 @@ export default function Login() {
             <div>
                 <h1 className="text-4xl font-bold p-10">AIR</h1>
             
-                <Button className="bg-white font-black text-black rounded-2xl w-1/4 hover:bg-gray-200">Login with Gmail</Button>
+                <Button className="bg-white font-blak font-semibold text-black rounded-2xl w-1/4 hover:bg-gray-200">Login with Gmail</Button>
             </div>
             <div>
             <div className="mx-auto p-10 w-2/4">
@@ -20,7 +20,7 @@ export default function Login() {
                 <p className="text-left">Password</p>
                 <Input placeholder="" className="bg-white"/>
                 <p className="text-right ">Forget Password?</p>
-                <Button className="bg-white font-bold text-black rounded-2xl w-full hover:bg-gray-200 mt-10 ">Login</Button>
+                <Button className="bg-white font-semibold text-black rounded-2xl w-full hover:bg-gray-200 mt-10 ">Login</Button>
             </div>
             </div>
 
