@@ -7,7 +7,7 @@ export default function Catalog() {
         <div>
             <LandingHeader />
             
-            <h1 className="text-4xl text-center">Sourth your Tickets</h1>
+            <h1 className="text-4xl text-center">Search your Tickets</h1>
             
             <div className="p-20">
                 
