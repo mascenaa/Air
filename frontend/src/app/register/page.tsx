@@ -32,9 +32,9 @@ export default function Register() {
                     <p className="text-left p-1">Senha</p>
                     <Input type="senha" className="bg-white" />
                     <div className="p-5">
-                        <p className="text-sm">*Possui 8 caracteres</p>
-                        <p className="text-sm">*Possuir pelo menos um número</p>
-                        <p className="text-sm">*Possuir pelo menos uma letra maiúscula</p>
+                        <p className="text-sm  text-[#606060]">*Possui 8 caracteres</p>
+                        <p className="text-sm text-[#606060]">*Possuir pelo menos um número</p>
+                        <p className="text-sm text-[#606060]">*Possuir pelo menos uma letra maiúscula</p>
                     </div>
                 </div>
                 <div className="text-center p-5">
