@@ -1,6 +1,12 @@
 import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Air - Faça login",
+    description: "Login to Air",
+};
 
 export default function Login() {
     return (

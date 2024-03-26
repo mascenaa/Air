@@ -57,7 +57,7 @@ export default function LandingHeader() {
                                              <ListItem href="/catalog" title="Tickets" className="hover:bg-stone-900 p-2 rounded-lg">
                                                   Procurando os melhores preços para as viagens.
                                              </ListItem>
-                                             <ListItem href="/convert" title="Milhas" className="hover:bg-stone-900 p-2 rounded-lg">
+                                             <ListItem href="/milhas" title="Milhas" className="hover:bg-stone-900 p-2 rounded-lg">
                                                   Confira a cotação atual das suas milhas.
                                              </ListItem>
                                              <li className="col-span-3">
