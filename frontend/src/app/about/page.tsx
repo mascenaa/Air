@@ -1,0 +1,244 @@
+import LandingHeader from "@/components/header/header"
+
+import Image from 'next/image'
+import Aviao from '../../../public/aviao.svg'
+
+import Eshley from '../../../public/time/Eshley.jpeg'
+import FelipeL from '../../../public/time/Lira.jpeg'
+import FelipeM from '../../../public/time/Mura.jpeg'
+import JoaoP from '../../../public/time/joao.jpeg'
+import Marty from '../../../public/time/Marty.jpeg'
+import Pietro from '../../../public/time/Pietro.jpeg'
+
+export default function AboutPage() {
+    return (
+        <div>
+            <LandingHeader></LandingHeader>
+            <div className="image-about relative overflow-hidden">
+
+                <Image
+                    src={Aviao}
+                    width={1300}
+                    height={1300}
+                    alt="Picture of airplane"
+                />
+
+                <div className="absolute w-1300 h-1300 px-10 py-10 top-0 right-0 text-center text-blue-900 text-5xl leading-4 flex flex-col items-end font-bold">Sobre a AIR.</div>
+                {/* <h1>Sobre a AIR.</h1> */}
+
+            </div>
+
+            <div className="section-one-about text-center">
+
+                <h1 className="title-about text-center">ABOUT US</h1>
+
+                <p className="paragraph-about text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, cum libero labore nemo quas voluptas distinctio aliquam, temporibus ad vitae, ipsa pariatur tempora accusamus cumque officia quis perspiciatis. Blanditiis, esse.</p>
+
+            </div>
+
+            <div className="section-goals text-center bg-blue-950 text-white">
+                <h2 className="title-goals text-center">What are your goals?</h2>
+
+                <div className="options-goals text-center">
+                    <div className="bit-goals text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                    <div className="bit-goals text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                    <div className="bit-goals text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="about-image-break">
+                <Image
+                    src={Aviao}
+                    width={1300}
+                    height={1300}
+                    alt="Picture of airplane"
+                />
+            </div>
+
+            <div className="section-different text-center bg-amber-600 text-white">
+                <h2 className="title-different text-center">What makes us different?</h2>
+
+                <div className="options-different text-center">
+                    <div className="bit-different text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                    <div className="bit-different text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                    <div className="bit-different text-center">
+                        {/* <Image
+                            src={Aviao}
+                            width={1300}
+                            height={1300}
+                            alt="Picture of airplane"
+                        /> */}
+
+                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="section-team flex flex-col justify-center items-center">
+
+                <div className="limitador-team flex flex-row items-start">
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={Eshley}
+                            width={90}
+                            height={90}
+                            alt="Eshley Maria Silva"
+                        />
+                        <p className="name-team text-center text-base p-1">Eshley Maria<br></br>Silva</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/eshley-maria-silva-441692265/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/eshleymaria/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={FelipeL}
+                            width={90}
+                            height={90}
+                            alt="Felipe Lira"
+                        />
+                        <p className="name-team text-center text-base p-1">Felipe<br></br>Lira</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/felipe-lira-286704265/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/_felipl/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={FelipeM}
+                            width={90}
+                            height={90}
+                            alt="Felipe Mura"
+                        />
+                        <p className="name-team text-center text-base p-1">Felipe<br></br>Murakami</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/felipe-murakami-979749286/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/felipemurakami1/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="limitador-team flex flex-row items-start">
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={JoaoP}
+                            width={90}
+                            height={90}
+                            alt="Joao Pedro Mascena"
+                        />
+                        <p className="name-team text-center text-base p-1">João Pedro<br></br>Mascena</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/mascenaa/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/joaomscn/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={Marty}
+                            width={90}
+                            height={90}
+                            alt="Marty Souza Gomes"
+                        />
+                        <p className="name-team text-center text-base p-1">Marty Souza<br></br>Gomes</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/giovanna-souza-gomes-594b0625a/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/_gio_gomes/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="integrante-um flex justify-center items-center flex-col m-10">
+                        <Image className="rounded-full m-1"
+                            src={Pietro}
+                            width={90}
+                            height={90}
+                            alt="Pietro Navarro"
+                        />
+                        <p className="name-team text-center text-base p-1">Pietro<br></br>Navarro</p>
+                        <div className="redes text-sm m-2">
+                            <a className="link-rede" href="https://www.linkedin.com/in/pietro-andrade-4053b7265/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                            </a>
+                            <a className="link-rede" href="https://www.instagram.com/pietroandrade._/" target="_blank">
+                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    )
+}
