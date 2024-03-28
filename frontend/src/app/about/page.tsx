@@ -2,6 +2,7 @@ import LandingHeader from "@/components/header/header"
 
 import Image from 'next/image'
 import Aviao from '../../../public/aviao.svg'
+import Aviao2 from '../../../public/aviao3.svg'
 
 import Eshley from '../../../public/time/Eshley.jpeg'
 import FelipeL from '../../../public/time/Lira.jpeg'
@@ -9,6 +10,14 @@ import FelipeM from '../../../public/time/Mura.jpeg'
 import JoaoP from '../../../public/time/joao.jpeg'
 import Marty from '../../../public/time/Marty.jpeg'
 import Pietro from '../../../public/time/Pietro.jpeg'
+
+import img_simpl from '../../../public/icones/simplificar.png'
+import img_pers from '../../../public/icones/personalizar.png'
+import img_viagem from '../../../public/icones/viagem.png'
+
+import img_custom from '../../../public/icones/customizar2.png'
+import img_pers2 from '../../../public/icones/personalize2.png'
+import img_res from '../../../public/icones/reserva3.png'
 
 export default function AboutPage() {
     return (
@@ -23,98 +32,99 @@ export default function AboutPage() {
                     alt="Picture of airplane"
                 />
 
-                <div className="absolute w-1300 h-1300 px-10 py-10 top-0 right-0 text-center text-blue-900 text-5xl leading-4 flex flex-col items-end font-bold">Sobre a AIR.</div>
-                {/* <h1>Sobre a AIR.</h1> */}
+                {/* <div className="absolute w-1300 h-1300 px-10 py-10 top-0 right-0 text-center text-blue-900 text-5xl leading-4 flex flex-col items-end font-bold">ABOUT AIR.</div> */}
 
             </div>
 
-            <div className="section-one-about text-center">
+            <div className="section-one-about text-center p-10">
 
-                <h1 className="title-about text-center">ABOUT US</h1>
+                <h1 className="title-about text-center font-extrabold text-2xl">ABOUT US</h1>
 
-                <p className="paragraph-about text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, cum libero labore nemo quas voluptas distinctio aliquam, temporibus ad vitae, ipsa pariatur tempora accusamus cumque officia quis perspiciatis. Blanditiis, esse.</p>
+                <p className="paragraph-about text-center mt-10 px-12">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, cum libero labore nemo quas voluptas distinctio aliquam, temporibus ad vitae, ipsa pariatur tempora accusamus cumque officia quis perspiciatis. Blanditiis, esse.</p>
 
             </div>
 
-            <div className="section-goals text-center bg-blue-950 text-white">
-                <h2 className="title-goals text-center">What are your goals?</h2>
+            <div className="section-goals text-center bg-blue-950 text-white py-10">
+                <h2 className="title-goals text-center  text-xl font-bold mb-12">What are our goals?</h2>
 
-                <div className="options-goals text-center">
-                    <div className="bit-goals text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
+                <div className="options-goals text-center flex flex-row justify-evenly m-4">
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        <Image
+                            src={img_simpl}
+                            width={50}
+                            height={50}
                             alt="Picture of airplane"
-                        /> */}
+                        />
 
-                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8 w-80">AIR streamline your flight booking journey with an intuitive and user-friendly platform, providing a hassle-free experience from search to reservation.</p>
                     </div>
-                    <div className="bit-goals text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
-                            alt="Picture of airplane"
-                        /> */}
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        <Image
+                            src={img_pers}
+                            width={50}
+                            height={50}
+                            alt="Picture of a mixer"
+                        />
 
-                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8  w-80">AIR offer tailored flight recommendations to match your individual preferences, ensuring each trip is unique and tailored to your specific needs.</p>
                     </div>
-                    <div className="bit-goals text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
-                            alt="Picture of airplane"
-                        /> */}
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        <Image
+                            src={img_viagem}
+                            width={50}
+                            height={50}
+                            alt="Picture of a bagpack"
+                        />
 
-                        <p className="p-opt-goals text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8  w-80">
+                            AIR offers accessible flight booking with diverse options, competitive prices, and convenient features for a satisfying experience.</p>
                     </div>
                 </div>
             </div>
 
             <div className="about-image-break">
                 <Image
-                    src={Aviao}
+                    src={Aviao2}
                     width={1300}
                     height={1300}
                     alt="Picture of airplane"
                 />
             </div>
 
-            <div className="section-different text-center bg-amber-600 text-white">
-                <h2 className="title-different text-center">What makes us different?</h2>
+            <div className="section-different text-center bg-[#FE9959] text-white py-10">
+                <h2 className="title-goals text-center  text-xl font-bold mb-12">What makes us different?</h2>
 
-                <div className="options-different text-center">
-                    <div className="bit-different text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
-                            alt="Picture of airplane"
-                        /> */}
+                <div className="options-goals text-center flex flex-row justify-evenly m-4">
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        {<Image
+                            src={img_custom}
+                            width={50}
+                            height={50}
+                            alt="Picture of money"
+                        />}
 
-                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8 w-80">We use cutting-edge technology to offer you the best deals on the market, with no hidden fees
+                        </p>
                     </div>
-                    <div className="bit-different text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        {<Image
+                            src={img_pers2}
+                            width={50}
+                            height={50}
                             alt="Picture of airplane"
-                        /> */}
+                        />}
 
-                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8 w-80">Filter by flexible dates, layovers, airlines, and more to find the perfect flight for you.</p>
                     </div>
-                    <div className="bit-different text-center">
-                        {/* <Image
-                            src={Aviao}
-                            width={1300}
-                            height={1300}
-                            alt="Picture of airplane"
-                        /> */}
+                    <div className="bit-goals text-center flex flex-col justify-center items-center">
+                        {<Image
+                            src={img_res}
+                            width={50}
+                            height={50}
+                            alt="Picture of reserva"
+                        />}
 
-                        <p className="p-opt-different text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet rem sed error repudiandae ullam nam nostrum commodi inventore voluptates quaerat dolores alias corporis, repellendus itaque saepe, totam quo assumenda fuga.</p>
+                        <p className="p-opt-goals text-center text-xs p-4 pt-8 w-80">Our intuitive and user-friendly interface makes booking flights easier than ever</p>
                     </div>
                 </div>
             </div>
@@ -148,7 +158,7 @@ export default function AboutPage() {
                             height={90}
                             alt="Felipe Lira"
                         />
-                        <p className="name-team text-center text-base p-1">Felipe<br></br>Lira</p>
+                        <p className="name-team text-center text-base p-1">Felipe Lira<br></br>do Nascimento</p>
                         <div className="redes text-sm m-2">
                             <a className="link-rede" href="https://www.linkedin.com/in/felipe-lira-286704265/" target="_blank">
                                 <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
