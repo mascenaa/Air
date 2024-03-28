@@ -2,6 +2,7 @@ import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Air - Faça login",
@@ -15,7 +16,7 @@ export default function Login() {
             <div className="text-center p-10">
                 <div>
                     <h1 className="text-3xl font-bold">Login</h1>
-                    <p className="text-[#606060] mt-2">Faça login para conferir seus tickets e reservas. Caso não possua um login, <span className="underline hover:cursor-pointer hover:text-slate-500 transition-all ease-in">clique aqui</span></p>
+                    <p className="text-[#606060] mt-2">Faça login para conferir seus tickets e reservas. Caso não possua um login, <Link href='/register' className="underline hover:cursor-pointer hover:text-slate-500 transition-all ease-in">clique aqui</Link></p>
                 </div>
                 <div>
                     <div className="mx-auto mt-5 w-2/4">

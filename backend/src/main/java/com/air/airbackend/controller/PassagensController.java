@@ -36,4 +36,9 @@ public class PassagensController {
           return passagensService.savePassagens(passagens);
      }
 
+     // EU tenho uma Api que retorna uma lista de passagens baseado no body do post
+     @PostMapping("/search")
+     public String searchPassagens(@RequestBody Passagens passagens) {
+          return passagensService.searchPassagens(passagens);
+     }
 }
