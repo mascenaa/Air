@@ -140,13 +140,19 @@ export default function AboutPage() {
                             height={90}
                             alt="Eshley Maria Silva"
                         />
-                        <p className="name-team text-center text-base p-1">Eshley Maria<br></br>Silva</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">Eshley Maria<br></br>Silva</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/eshley-maria-silva-441692265/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/eshleymaria/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -158,13 +164,19 @@ export default function AboutPage() {
                             height={90}
                             alt="Felipe Lira"
                         />
-                        <p className="name-team text-center text-base p-1">Felipe Lira<br></br>do Nascimento</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">Felipe Lira<br></br>do Nascimento</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/felipe-lira-286704265/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/_felipl/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -174,15 +186,21 @@ export default function AboutPage() {
                             src={FelipeM}
                             width={90}
                             height={90}
-                            alt="Felipe Mura"
+                            alt="Felipe Murakami"
                         />
-                        <p className="name-team text-center text-base p-1">Felipe<br></br>Murakami</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">Felipe<br></br>Murakami</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/felipe-murakami-979749286/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/felipemurakami1/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -198,13 +216,19 @@ export default function AboutPage() {
                             height={90}
                             alt="Joao Pedro Mascena"
                         />
-                        <p className="name-team text-center text-base p-1">João Pedro<br></br>Mascena</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">João Pedro<br></br>Mascena</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/mascenaa/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/joaomscn/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -216,13 +240,19 @@ export default function AboutPage() {
                             height={90}
                             alt="Marty Souza Gomes"
                         />
-                        <p className="name-team text-center text-base p-1">Marty Souza<br></br>Gomes</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">Marty Souza<br></br>Gomes</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/giovanna-souza-gomes-594b0625a/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/_gio_gomes/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -234,13 +264,19 @@ export default function AboutPage() {
                             height={90}
                             alt="Pietro Navarro"
                         />
-                        <p className="name-team text-center text-base p-1">Pietro<br></br>Navarro</p>
-                        <div className="redes text-sm m-2">
+                        <p className="name-team text-center text-base p-1 w-32">Pietro<br></br>Navarro</p>
+                        <div className="redes text-sm m-2 flex flex-col justify-center items-center content-center align-center">
                             <a className="link-rede" href="https://www.linkedin.com/in/pietro-andrade-4053b7265/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Linkedin</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-amber-400 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Linkedin</p></span>
+                                </button>
                             </a>
                             <a className="link-rede" href="https://www.instagram.com/pietroandrade._/" target="_blank">
-                                <p className="pb-1 text-center hover:font-bold hover:scale-105 transition ease-in-out delay-150">Instagram</p>
+                                <button className="btn relative inline-flex items-center text-center justify-center overflow-hidden transition-all rounded group text-white">
+                                    <span className="w-0 h-0 rounded bg-blue-700 absolute ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
+                                    <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10"><p className=" text-center hover:font-bold hover:scale-105 text-white px-2 items-center">Instagram</p></span>
+                                </button>
                             </a>
                         </div>
                     </div>
