@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
      Select,
      SelectContent,
@@ -22,8 +22,19 @@ export default function FlightSelect() {
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
 
-     const [search, setSearch] = useState<string>("")
-     const [aeroportos, setAeroportos] = useState<any>([])
+     const [searchFrom, setSearchFrom] = useState<string>("")
+     const [searchTo, setSearchTo] = useState<string>("")
+     const [aeroportosFrom, setAeroportosFrom] = useState<any>([])
+     const [aeroportosTo, setAeroportosTo] = useState<any>([])
+
+     const [flightInfos, setFlightInfos] = useState<any>({
+          from: "",
+          to: "",
+          dateI: dateIda,
+          dateV: dateVolta,
+          currency: "BRL",
+          hl: "pt-br"
+     })
 
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
           return new Intl.DateTimeFormat("en-US", {
@@ -34,17 +45,30 @@ export default function FlightSelect() {
      async function getAeroportos() {
           const response = await fetch("http://localhost:8080/api/v1/aeroportos")
           const data = await response.json()
-          setAeroportos(data.slice(0, 7))
+          setAeroportosFrom(data.slice(0, 7))
+          setAeroportosTo(data.slice(0, 7))
      }
 
-     function getSearchAeroporto(search: string) {
+     function getSearchAeroportoFrom(search: string) {
           fetch(`http://localhost:8080/api/v1/aeroportos/search/${search}`)
                .then((response) => response.json())
                .then((data: any) => {
-                    setAeroportos(data.slice(0, 5));
+                    setAeroportosFrom(data.slice(0, 5));
                })
                .catch((error) => {
-                    setAeroportos([]);
+                    setAeroportosFrom([]);
+               });
+     }
+
+
+     function getSearchAeroportoTo(search: string) {
+          fetch(`http://localhost:8080/api/v1/aeroportos/search/${search}`)
+               .then((response) => response.json())
+               .then((data: any) => {
+                    setAeroportosTo(data.slice(0, 5));
+               })
+               .catch((error) => {
+                    setAeroportosTo([]);
                });
      }
 
@@ -53,19 +77,31 @@ export default function FlightSelect() {
      }, [])
 
      useEffect(() => {
-          if (search.length > 2) {
-               getSearchAeroporto(search)
-          } else {
+          if (searchFrom.length > 2) {
+               getSearchAeroportoFrom(searchFrom)
+          }
+          else if (searchTo.length > 2) {
+               getSearchAeroportoTo(searchTo)
+          }
+          else {
                getAeroportos()
           }
-     }, [search])
+     }, [searchFrom, searchTo])
+
+     useEffect(() => {
+
+          console.log(flightInfos)
+
+     }, [flightInfos])
 
      return (
           <div className="bg-white flex text-black w-full  mx-auto p-5 rounded-[4px] items-center justify-between">
                <div className="flex gap-10 w-fit ">
                     <div className="w-1/2">
                          <h3 className="text-sm font-bold">De</h3>
-                         <Select>
+                         <Select onValueChange={(e) => {
+                              setFlightInfos({ ...flightInfos, from: e })
+                         }}>
                               <SelectTrigger className="border-0 w-fit p-0">
                                    <SelectValue className="text-sm" placeholder="Selecione sua partida" />
                               </SelectTrigger>
@@ -76,11 +112,11 @@ export default function FlightSelect() {
                                         <Input
                                              type="text"
                                              placeholder="Digite o seu aeroporto favorito"
-                                             onChange={(e) => setSearch(e.target.value)}></Input>
+                                             onChange={(e) => setSearchFrom(e.target.value)}></Input>
                                         {
-                                             aeroportos.length > 0 ?
-                                                  aeroportos.map((aeroporto: any) => (
-                                                       <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             aeroportosFrom.length > 0 ?
+                                                  aeroportosFrom.map((aeroporto: any) => (
+                                                       <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
                                                             <div className="flex flex-col p-2">
                                                                  <div className="flex items-center">
                                                                       <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
@@ -104,7 +140,9 @@ export default function FlightSelect() {
                     </div>
                     <div className="w-1/2">
                          <h3 className="text-sm font-bold">Para</h3>
-                         <Select>
+                         <Select onValueChange={(e) => {
+                              setFlightInfos({ ...flightInfos, to: e })
+                         }}>
                               <SelectTrigger className="border-0 w-fit p-0">
                                    <SelectValue className="text-sm" placeholder="Selecione sua partida" />
                               </SelectTrigger>
@@ -115,11 +153,11 @@ export default function FlightSelect() {
                                         <Input
                                              type="text"
                                              placeholder="Digite o seu aeroporto favorito"
-                                             onChange={(e) => setSearch(e.target.value)}></Input>
+                                             onChange={(e) => setSearchTo(e.target.value)}></Input>
                                         {
-                                             aeroportos.length > 0 ?
-                                                  aeroportos.map((aeroporto: any) => (
-                                                       <SelectItem key={aeroporto.id} value={aeroporto.id} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             aeroportosTo.length > 0 ?
+                                                  aeroportosTo.map((aeroporto: any) => (
+                                                       <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
                                                             <div className="flex flex-col p-2">
                                                                  <div className="flex items-center">
                                                                       <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />

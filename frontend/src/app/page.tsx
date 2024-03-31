@@ -24,7 +24,6 @@ export default function Home() {
 
   const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
 
-  //console.log(pontosIntermediarios)
 
   const data = [{
     name: "random-name",

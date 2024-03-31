@@ -17,22 +17,22 @@ import { Plane } from "lucide-react";
 
 const components: { title: string; href: string; description: string }[] = [
      {
-          title: "Alert Dialog",
-          href: "/docs/primitives/alert-dialog",
+          title: "Sobre nós",
+          href: "/about",
           description:
-               "A modal dialog that interrupts the user with important content and expects a response.",
+               "Curioso sobre quem somos? Saiba mais sobre a nossa história e missão.",
      },
      {
-          title: "Hover Card",
-          href: "/docs/primitives/hover-card",
+          title: "Termos de uso",
+          href: "/uses",
           description:
-               "For sighted users to preview content available behind a link.",
+               "Saiba mais sobre os termos de uso da nossa plataforma e como eles se aplicam a você.",
      },
      {
-          title: "Progress",
-          href: "/docs/primitives/progress",
+          title: "Status",
+          href: "/status",
           description:
-               "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+               "Enfrentando problemas com a plataforma? Confira o status atual dos nossos serviços.",
      },
 ]
 
