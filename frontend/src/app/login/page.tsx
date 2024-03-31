@@ -1,15 +1,15 @@
+"use client"
+import { useState, useEffect } from "react";
 import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-    title: "Air - Faça login",
-    description: "Login to Air",
-};
-
 export default function Login() {
+    const [errorMessage, setErrorMessage] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
 
     function handleSubmit() {
         fetch('http://localhost:3000/api/v1/auth', {
@@ -28,6 +28,7 @@ export default function Login() {
             })
             .catch((error) => {
                 console.error('Error:', error);
+                setErrorMessage('Algo está errado... Tente novamente!')
             }
             );
     }
@@ -41,7 +42,10 @@ export default function Login() {
                     <p className="text-[#606060] mt-2">Faça login para conferir seus tickets e reservas. Caso não possua um login, <Link href='/register' className="underline hover:cursor-pointer hover:text-slate-500 transition-all ease-in">clique aqui</Link></p>
                 </div>
                 <div>
-                    <form>
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        handleSubmit()
+                    }}>
                         <div className="mx-auto mt-5 w-2/4">
                             <div>
                                 <p className="text-left">Email</p>
@@ -53,8 +57,12 @@ export default function Login() {
                             </div>
                             <p className="text-right text-[#606060] mt-2 text-sm hover:text-slate-500 hover:cursor-pointer transition-all ease-in">Forget Password?</p>
                             <Button className="bg-white font-semibold text-black rounded-md w-full hover:bg-gray-200 mt-5">Login</Button>
+                            <p className="text-red-600 mt-2">
+                                {errorMessage}
+                            </p>
                         </div>
                     </form>
+
                 </div>
             </div>
 

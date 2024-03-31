@@ -18,12 +18,12 @@ import Map from '@/assets/maps.svg'
 import calcularCoordenadas from "@/lib/calc_routes";
 
 export default function Home() {
-
   const aeroporto1 = { latitude: -23.6256838449846, longitude: -46.65801233873098 }; // Rio de Janeiro (SBRJ)
   const aeroporto2 = { latitude: -22.814418605698506, longitude: -43.24673719590761 }; // Porto Alegre (SBPA)
 
   const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
 
+  //console.log(pontosIntermediarios)
 
   const data = [{
     name: "random-name",
@@ -53,10 +53,8 @@ export default function Home() {
 
   return (
     <section>
-      <div>
-      </div>
+      <LandingHeader />
       <div className="min-h-screen">
-        <LandingHeader />
         <div>
           <h1 className="text-4xl text-center w-1/2 mx-auto mt-10 font-normal">
             Looking for the best flight for your trip?
@@ -66,11 +64,9 @@ export default function Home() {
             <div className="w-full absolute z-[100] top-28">
               <FlightSelect />
             </div>
-
             <div>
               <Spline
                 scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
-                renderOnDemand={true}
               />
             </div>
             <div style={{ position: 'absolute', top: 15, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>

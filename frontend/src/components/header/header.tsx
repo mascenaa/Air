@@ -60,11 +60,11 @@ export default function LandingHeader() {
                                              <ListItem href="/milhas" title="Milhas" className="hover:bg-stone-900 p-2 rounded-lg">
                                                   Confira a cotação atual das suas milhas.
                                              </ListItem>
-                                             <li className="col-span-3">
+                                             <span className="col-span-3">
                                                   <ListItem href="/docs/primitives/typography" title="Chat" className="hover:bg-stone-900 p-2 rounded-lg w-full">
                                                        Nosso chatbot para dicas, dúvidas e etc.
                                                   </ListItem>
-                                             </li>
+                                             </span>
                                         </ul>
                                    </NavigationMenuContent>
                               </NavigationMenuItem>
@@ -75,7 +75,7 @@ export default function LandingHeader() {
                                    <NavigationMenuContent>
                                         <ul className="grid p-4 w-[400px] lg:grid-cols-[.75fr_1fr] bg-stone-950">
                                              {components.map((component) => (
-                                                  <li className="col-span-3">
+                                                  <span key={component.href} className="col-span-3">
                                                        <ListItem
                                                             key={component.title}
                                                             title={component.title}
@@ -83,7 +83,7 @@ export default function LandingHeader() {
                                                        >
                                                             {component.description}
                                                        </ListItem>
-                                                  </li>
+                                                  </span>
                                              ))}
                                         </ul>
                                    </NavigationMenuContent>
