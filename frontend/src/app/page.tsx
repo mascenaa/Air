@@ -9,12 +9,10 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+
 } from "@/components/ui/carousel"
 import { type CarouselApi } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
-import Map from '@/assets/maps.svg'
 import calcularCoordenadas from "@/lib/calc_routes";
 
 export default function Home() {
@@ -23,7 +21,7 @@ export default function Home() {
 
   const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
 
-  //console.log(pontosIntermediarios)
+  console.log(pontosIntermediarios)
 
   const data = [{
     name: "random-name",
