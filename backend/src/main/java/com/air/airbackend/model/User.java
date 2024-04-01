@@ -26,6 +26,7 @@ public class User {
 
      private String senha;
      private UUID[] passagensFavoritas;
+     private Integer pontos;
 
      public User() {
      }
