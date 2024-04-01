@@ -97,6 +97,14 @@ public class User {
           this.passagensFavoritas = list.toArray(new UUID[0]);
      }
 
+     public Integer getPontos() {
+          return pontos;
+     }
+
+     public void setPontos(Integer pontos) {
+          this.pontos = pontos;
+     }
+
      private String hashSenha(String senha) {
           try {
                MessageDigest md = MessageDigest.getInstance("SHA-256");
