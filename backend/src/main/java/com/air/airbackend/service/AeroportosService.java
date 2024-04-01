@@ -22,6 +22,10 @@ public class AeroportosService {
           return aeroportosRepository.findByCodigoIata(codigoIata);
      }
 
+     public List<Aeroportos> getAeroportosBySearch(String search) {
+          return aeroportosRepository.findByNomeContaining(search);
+     }
+
      public Aeroportos getAeroportosById(Long id) {
           return aeroportosRepository.findById(id).orElse(null);
      }

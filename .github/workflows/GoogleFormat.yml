@@ -1,0 +1,12 @@
+name: Google Java Format
+
+
+uses: axel-op/googlejavaformat-action@v3.6.0
+  with:
+    args: # Optional. Arguments for the Google Java Format executable
+    files: # Optional. Pattern to match the files to be formatted. Default is **/*.java
+    files-excluded: # Optional. Pattern to match the files to be ignored by this action
+    skipCommit: # Optional. Set to true to not commit the changes. Default is false
+    version: # Optional. Version of Google Java Format to use
+    githubToken: # Optional. Recommended on MacOS machines
+    commitMessage: # Optional. Commit message. Default is "Google Java Format"

@@ -12,4 +12,6 @@ public interface AeroportosRepository extends JpaRepository<Aeroportos, Long> {
 
      List<Aeroportos> findByCodigoIata(String codigoIata);
 
+     List<Aeroportos> findByNomeContaining(String nome);
+
 }

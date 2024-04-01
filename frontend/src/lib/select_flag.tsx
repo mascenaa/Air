@@ -4,19 +4,18 @@ import flags from "./imports_flag"
 
 interface ComponentSVGCountryProps {
      country: string;
+     className?: string;
 }
 
 function ComponentSVGCountry(props: ComponentSVGCountryProps): JSX.Element {
-     const { country } = props;
-
+     const { country, className } = props;
 
      return (
-          <div>
+          <div className={className}>
                <Image
                     src={flags[country]}
-                    alt="Brazil"
-                    width={20}
-                    height={20}
+                    alt=""
+                    className="w-5 h-3"
                />
           </div>
 

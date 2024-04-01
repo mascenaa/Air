@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +29,16 @@ public class PassagensController {
      @GetMapping("/{id}")
      public Passagens getPassagensById(Long id) {
           return passagensService.getPassagensById(id);
+     }
+
+     @PostMapping
+     public Passagens savePassagens(@RequestBody Passagens passagens) {
+          return passagensService.savePassagens(passagens);
+     }
+
+     // EU tenho uma Api que retorna uma lista de passagens baseado no body do post
+     @PostMapping("/search")
+     public String searchPassagens(@RequestBody Passagens passagens) {
+          return passagensService.searchPassagens(passagens);
      }
 }
