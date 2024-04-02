@@ -26,13 +26,11 @@ export default function Login() {
             .then(data => {
                 console.log(data)
                 if (data) {
-                    registerCookie('user', {
-                        email: email,
-                        password: password,
-                        id: data.id,
-                        pontos: data.pontos,
-                        passagensFavoritas: data.passagensFavoritas
-                    });
+                    localStorage.setItem('email', data.email)
+                    localStorage.setItem('name', data.nome)
+                    localStorage.setItem('id', data.id)
+                    localStorage.setItem('passagensFavoritas', data.passagensFavoritas)
+                    localStorage.setItem('pontos', data.pontos)
                     window.location.href = '/dashboard/home'
                 } else {
                     setErrorMessage('Email ou senha incorretos!')
