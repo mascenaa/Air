@@ -1,8 +1,19 @@
+'use client'
+import React from 'react';
+
 export default function DashboardLayout({
      children,
 }: Readonly<{
      children: React.ReactNode;
 }>) {
+
+     const email = localStorage.getItem('email')
+     const name = localStorage.getItem('name')
+     const id = localStorage.getItem('id')
+     const passagensFavoritas = localStorage.getItem('passagensFavoritas')
+     const pontos = localStorage.getItem('pontos')
+
+
      return (
           <div className="flex">
                <div className="bg-stone-950 p-5 h-screen">
@@ -11,10 +22,14 @@ export default function DashboardLayout({
                               <h1 className="text-2xl font-bold">AIR</h1>
                               <p className="text-[10px] text-amber-900 bg-amber-400 w-fit p-1 rounded-2xl font-bold">BETA</p>
                          </div>
-                         <p className="text-xs text-[#606060]">joao.pedro@gmail.com</p>
-                         <p className="text-xs text-[#606060]">Pontos: 0</p>
+                         <div className='mt-2'>
+                              <p className="text-xs text-[#606060]">
+                                   Olá, {name}!
+                              </p>
+                              <p className="text-xs text-[#606060]">Pontos: {pontos}</p>
+                         </div>
                     </section>
-                    <section className="mt-3">
+                    <section className="mt-2">
                          <div>
                               <h3 className="text-lg font-bold text-[#505050]">Principais</h3>
                               <ul className="text-sm ml-2">
@@ -37,6 +52,6 @@ export default function DashboardLayout({
                <div className="p-5">
                     {children}
                </div>
-          </div>
+          </div >
      )
 }

@@ -4,27 +4,37 @@ import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { registerCookie } from "@/lib/cookies_manager";
 
 export default function Login() {
     const [errorMessage, setErrorMessage] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-
     function handleSubmit() {
-        fetch('http://localhost:3000/api/v1/auth', {
+        fetch('http://localhost:8080/api/v1/user/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: 'email',
-                password: 'password'
+                email: email,
+                senha: password
             })
         })
             .then(response => response.json())
             .then(data => {
                 console.log(data)
+                if (data) {
+                    localStorage.setItem('email', data.email)
+                    localStorage.setItem('name', data.nome)
+                    localStorage.setItem('id', data.id)
+                    localStorage.setItem('passagensFavoritas', data.passagensFavoritas)
+                    localStorage.setItem('pontos', data.pontos)
+                    window.location.href = '/dashboard/home'
+                } else {
+                    setErrorMessage('Email ou senha incorretos!')
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -49,11 +59,11 @@ export default function Login() {
                         <div className="mx-auto mt-5 w-2/4">
                             <div>
                                 <p className="text-left">Email</p>
-                                <Input placeholder="Insira seu email" className="bg-white text-black text-sm mt-2" type="email" />
+                                <Input onChange={(e) => setEmail(e.target.value)} placeholder="Insira seu email" className="bg-white text-black text-sm mt-2" type="email" />
                             </div>
                             <div>
                                 <p className="text-left mt-5">Password</p>
-                                <Input placeholder="Insira sua senha" className="bg-white text-black text-sm mt-2" type="password" />
+                                <Input onChange={(e) => setPassword(e.target.value)} placeholder="Insira sua senha" className="bg-white text-black text-sm mt-2" type="password" />
                             </div>
                             <p className="text-right text-[#606060] mt-2 text-sm hover:text-slate-500 hover:cursor-pointer transition-all ease-in">Forget Password?</p>
                             <Button className="bg-white font-semibold text-black rounded-md w-full hover:bg-gray-200 mt-5">Login</Button>

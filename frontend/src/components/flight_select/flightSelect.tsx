@@ -27,11 +27,16 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
+import { config, getJson } from "serpapi";
 
 export default function FlightSelect() {
 
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
+
+
+     config.api_key = "02ec2b819f34df615009e2d357faef77936048f34b873f00d6ae0d48454c9523";
+     config.timeout = 60000;
 
      const [searchFrom, setSearchFrom] = useState<string>("")
      const [searchTo, setSearchTo] = useState<string>("")
@@ -100,10 +105,34 @@ export default function FlightSelect() {
      }, [searchFrom, searchTo])
 
      useEffect(() => {
+          console.log(flightInfos)
+     }, [flightInfos])
+
+
+     async function handleSubmit(e: any) {
+          e.preventDefault();
 
           console.log(flightInfos)
 
-     }, [flightInfos])
+          if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "") {
+               getJson({
+                    engine: "google_flights",
+                    departure_id: "PEK",
+                    arrival_id: "AUS",
+                    outbound_date: "2024-04-10",
+                    return_date: "2024-04-16",
+                    currency: "USD",
+                    hl: "en",
+                    api_key: "02ec2b819f34df615009e2d357faef77936048f34b873f00d6ae0d48454c9523"
+               }, (json) => {
+                    console.log(json);
+               });
+          } else {
+               console.log("Preencha todos os campos")
+          }
+     }
+
+
 
      return (
           <div className="bg-white flex flex-col text-black w-full mx-auto p-5 rounded-[4px] items-center justify-between">
@@ -236,7 +265,9 @@ export default function FlightSelect() {
                     </div>
                     <div>
                     </div>
-                    <Button className="bg-amber-400 hover:bg-amber-500">Ache os tickets</Button>
+                    <Button onClick={(e) => {
+                         handleSubmit(e)
+                    }} className="bg-amber-400 hover:bg-amber-500">Ache os tickets</Button>
                </div>
                <div className="flex flex-row w-full mx-auto rounded-[4px] mt-2 gap-10">
                     <div className="w-fit">

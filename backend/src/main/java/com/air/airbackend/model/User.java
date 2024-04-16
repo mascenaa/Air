@@ -31,11 +31,12 @@ public class User {
      public User() {
      }
 
-     public User(String nome, String email, String senha) {
+     public User(String nome, String email, String senha, Integer pontos) {
           this.nome = nome;
           this.email = email;
           this.senha = hashSenha(senha);
           this.passagensFavoritas = new UUID[0];
+          this.pontos = pontos;
      }
 
      public Long getId() {
@@ -95,6 +96,14 @@ public class User {
                }
           }
           this.passagensFavoritas = list.toArray(new UUID[0]);
+     }
+
+     public Integer getPontos() {
+          return pontos;
+     }
+
+     public void setPontos(Integer pontos) {
+          this.pontos = pontos;
      }
 
      private String hashSenha(String senha) {
