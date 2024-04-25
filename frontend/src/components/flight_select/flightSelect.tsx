@@ -1,5 +1,4 @@
-"use client"
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import {
      Select,
      SelectContent,
@@ -29,15 +28,11 @@ import {
 } from "@/components/ui/drawer"
 import { config, getJson } from "serpapi";
 
+
 export default function FlightSelect() {
 
      const [dateIda, setDateIda] = useState<Date>()
      const [dateVolta, setDateVolta] = useState<Date>()
-
-
-     config.api_key = "02ec2b819f34df615009e2d357faef77936048f34b873f00d6ae0d48454c9523";
-     config.timeout = 60000;
-
      const [searchFrom, setSearchFrom] = useState<string>("")
      const [searchTo, setSearchTo] = useState<string>("")
      const [aeroportosFrom, setAeroportosFrom] = useState<any>([])
@@ -113,29 +108,12 @@ export default function FlightSelect() {
           e.preventDefault();
 
           console.log(flightInfos)
-
-          if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "") {
-               getJson({
-                    engine: "google_flights",
-                    departure_id: "PEK",
-                    arrival_id: "AUS",
-                    outbound_date: "2024-04-10",
-                    return_date: "2024-04-16",
-                    currency: "USD",
-                    hl: "en",
-                    api_key: "02ec2b819f34df615009e2d357faef77936048f34b873f00d6ae0d48454c9523"
-               }, (json) => {
-                    console.log(json);
-               });
-          } else {
-               console.log("Preencha todos os campos")
-          }
      }
 
 
 
      return (
-          <div className="bg-white flex flex-col text-black w-full mx-auto p-5 rounded-[4px] items-center justify-between">
+          <div suppressHydrationWarning={true} className="bg-white flex flex-col text-black w-full mx-auto p-5 rounded-[4px] items-center justify-between">
                <div className="flex flex-row w-full mx-auto  rounded-[4px] items-center justify-between">
                     <div className="flex gap-10 w-fit ">
                          <div className="w-1/2">
@@ -155,24 +133,29 @@ export default function FlightSelect() {
                                                   placeholder="Digite o seu aeroporto favorito"
                                                   onChange={(e) => setSearchFrom(e.target.value)} />
                                              {
+
                                                   aeroportosFrom.length > 0 ?
                                                        aeroportosFrom.map((aeroporto: any) => (
-                                                            <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
-                                                                 <div className="flex flex-col p-2">
-                                                                      <div className="flex items-center">
-                                                                           <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
-                                                                           <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                            <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
+                                                                 <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                                      <div className="flex flex-col p-2">
+                                                                           <div className="flex items-center">
+                                                                                <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                                <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                                           </div>
                                                                       </div>
-                                                                 </div>
-                                                            </SelectItem>
+                                                                 </SelectItem>
+                                                            </Suspense>
                                                        )) : (
-                                                            <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                                 <div className="flex flex-col">
-                                                                      <div className="flex items-center gap-2">
-                                                                           <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                            <Suspense fallback={<div>Loading...</div>}>
+                                                                 <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                                      <div className="flex flex-col">
+                                                                           <div className="flex items-center gap-2">
+                                                                                <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                           </div>
                                                                       </div>
-                                                                 </div>
-                                                            </SelectItem>
+                                                                 </SelectItem>
+                                                            </Suspense>
                                                        )
                                              }
                                         </form>
@@ -198,22 +181,27 @@ export default function FlightSelect() {
                                              {
                                                   aeroportosTo.length > 0 ?
                                                        aeroportosTo.map((aeroporto: any) => (
-                                                            <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
-                                                                 <div className="flex flex-col p-2">
-                                                                      <div className="flex items-center">
-                                                                           <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
-                                                                           <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                            <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
+                                                                 <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                                      <div className="flex flex-col p-2">
+                                                                           <div className="flex items-center">
+                                                                                <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                                <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
+                                                                           </div>
                                                                       </div>
-                                                                 </div>
-                                                            </SelectItem>
+                                                                 </SelectItem>
+                                                            </Suspense>
                                                        )) : (
-                                                            <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                                 <div className="flex flex-col">
-                                                                      <div className="flex items-center gap-2">
-                                                                           <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                            <Suspense fallback={<div>Loading...</div>}>
+                                                                 <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                                      <div className="flex flex-col">
+                                                                           <div className="flex items-center gap-2">
+                                                                                <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                           </div>
                                                                       </div>
-                                                                 </div>
-                                                            </SelectItem>
+                                                                 </SelectItem>
+                                                            </Suspense>
+
                                                        )
                                              }
                                         </form>
@@ -273,17 +261,48 @@ export default function FlightSelect() {
                     <div className="w-fit">
                          <h3 className="text-sm font-bold">Quantas pessoas</h3>
                          <div className="flex gap-2 items-center">
-                              <Drawer>
+                              <Drawer >
                                    <DrawerTrigger className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px]">+</DrawerTrigger>
-                                   <DrawerContent>
-                                        <DrawerHeader>
-                                             <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                                             <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                                   <DrawerContent className="bg-stone-950 border-none flex flex-col gap-5">
+                                        <DrawerHeader >
+                                             <DrawerTitle className="text-center">Quantas pessoas iram na viagem?</DrawerTitle>
+                                             <DrawerDescription className="text-center">Lembre-se de adicionar todos os integrantes</DrawerDescription>
                                         </DrawerHeader>
-                                        <DrawerFooter>
-                                             <Button>Submit</Button>
+                                        <div className="flex flex-col mx-auto w-1/2 gap-5">
+                                             <div className="flex items-center gap-5">
+                                                  <div className="w-full">
+                                                       <h1>Adultos</h1>
+                                                       <p className="text-xs">A partir de 11 anos</p>
+                                                  </div>
+                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                             </div>
+                                             <div className="flex items-center gap-5">
+                                                  <div className="w-full">
+                                                       <h1>Crianças</h1>
+                                                       <p className="text-xs">de 2 a 11 anos</p>
+                                                  </div>
+                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                             </div>
+                                             <div className="flex items-center gap-5">
+                                                  <div className="w-full">
+                                                       <h1>Crianças</h1>
+                                                       <p className="text-xs">no assento</p>
+                                                  </div>
+                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                             </div>
+                                             <div className="flex items-center gap-5">
+                                                  <div className="w-full">
+                                                       <h1>Crianças</h1>
+                                                       <p className="text-xs">no colo</p>
+                                                  </div>
+                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                             </div>
+                                        </div>
+
+                                        <DrawerFooter className="w-1/2 mx-auto">
+                                             <Button className="bg-white text-black w-full hover:bg-slate-300 ">Submit</Button>
                                              <DrawerClose>
-                                                  <Button variant="outline">Cancel</Button>
+                                                  <Button variant="outline" className="w-full">Cancel</Button>
                                              </DrawerClose>
                                         </DrawerFooter>
                                    </DrawerContent>
