@@ -45,8 +45,22 @@ export default function Home() {
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1)
     })
-  }, [api])
 
+    fetch('/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        departure_id: "GRU",
+        arrival_id: "JFK",
+        outbound: "2022-12-12",
+        returnDate: "2022-12-20"
+      })
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+    })
+  }, [api])
 
 
   return (
