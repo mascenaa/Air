@@ -4,7 +4,6 @@ import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { registerCookie } from "@/lib/cookies_manager";
 
 export default function Login() {
     const [errorMessage, setErrorMessage] = useState('')
@@ -12,10 +11,11 @@ export default function Login() {
     const [password, setPassword] = useState('')
 
     function handleSubmit() {
-        fetch('http://localhost:8080/api/v1/user/auth', {
+        fetch('http://ec2-18-234-201-68.compute-1.amazonaws.com:8080/api/v1/user/auth', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer 1239123'
             },
             body: JSON.stringify({
                 email: email,
