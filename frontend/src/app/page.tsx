@@ -9,27 +9,13 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-
 } from "@/components/ui/carousel"
 import { type CarouselApi } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
-import calcularCoordenadas from "@/lib/calc_routes";
+
+
 
 export default function Home() {
-  // const aeroporto1 = { latitude: -23.6256838449846, longitude: -46.65801233873098 }; // Rio de Janeiro (SBRJ)
-  // const aeroporto2 = { latitude: -22.814418605698506, longitude: -43.24673719590761 }; // Porto Alegre (SBPA)
-
-  // const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
-
-  // console.log(pontosIntermediarios)
-
-  // const data = [{
-  //   name: "random-name",
-  //   color: [101, 147, 245],
-  //   path: calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10)
-  // }
-  // ]
-
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
@@ -39,27 +25,30 @@ export default function Home() {
       return
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
-
-    api.on("select", () => {
+    if (typeof window !== "undefined") {
+      setCount(api.scrollSnapList().length)
       setCurrent(api.selectedScrollSnap() + 1)
-    })
 
-    fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        departure_id: "GRU",
-        arrival_id: "AEP",
-        outbound: "2024-12-12",
-        returnDate: "2024-12-20"
+      api.on("select", () => {
+        setCurrent(api.selectedScrollSnap() + 1)
       })
-    }).then(res => res.json()).then(data => {
-      console.log(data)
-    })
+
+    }
+
+    // fetch('/api/search', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     departure_id: "GRU",
+    //     arrival_id: "AEP",
+    //     outbound: "2024-12-12",
+    //     returnDate: "2024-12-20"
+    //   })
+    // }).then(res => res.json()).then(data => {
+    //   console.log(data)
+    // })
   }, [api])
 
 
@@ -84,7 +73,7 @@ export default function Home() {
                 />  
               */}
             </Suspense>
-            <div style={{ position: 'absolute', top: 15, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
+            <div style={{ position: 'absolute', left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
           </div>
         </div>
       </div>
@@ -133,6 +122,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

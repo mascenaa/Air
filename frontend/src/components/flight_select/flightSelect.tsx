@@ -14,7 +14,7 @@ import {
      PopoverContent,
      PopoverTrigger,
 } from "@/components/ui/popover"
-import { CalendarIcon, Star } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import ComponentSVGCountry from "@/lib/select_flag";
 import {
      Drawer,
@@ -26,8 +26,6 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
-import { config, getJson } from "serpapi";
-
 
 export default function FlightSelect() {
 
@@ -44,7 +42,12 @@ export default function FlightSelect() {
           dateI: dateIda,
           dateV: dateVolta,
           currency: "BRL",
-          hl: "pt-br"
+          hl: "pt-br",
+          adults: 0,
+          children: 0,
+          children_seat: 0,
+          children_lap: 0,
+          travel_class: ""
      })
 
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
@@ -84,28 +87,45 @@ export default function FlightSelect() {
      }
 
      useEffect(() => {
-          getAeroportos()
-     }, [])
+          if (typeof window !== "undefined") {
+               getAeroportos();
+          }
+     }, []);
 
      useEffect(() => {
-          if (searchFrom.length > 2) {
-               getSearchAeroportoFrom(searchFrom)
+          if (typeof window !== "undefined") {
+               if (searchFrom.length > 2) {
+                    getSearchAeroportoFrom(searchFrom);
+               } else if (searchTo.length > 2) {
+                    getSearchAeroportoTo(searchTo);
+               } else {
+                    getAeroportos();
+               }
           }
-          else if (searchTo.length > 2) {
-               getSearchAeroportoTo(searchTo)
-          }
-          else {
-               getAeroportos()
-          }
-     }, [searchFrom, searchTo])
+     }, [searchFrom, searchTo]);
 
      useEffect(() => {
-          console.log(flightInfos)
-     }, [flightInfos])
-
+          if (typeof window !== "undefined") {
+               console.log(flightInfos);
+          }
+     }, [flightInfos]);
 
      async function handleSubmit(e: any) {
           e.preventDefault();
+
+          const response = await fetch("/api/search/route", {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                    departure_id: "GRU",
+                    arrival_id: "FCO",
+                    outbound: "2024-05-01",
+                    return: "2024-05-10",
+
+               }),
+          });
 
           console.log(flightInfos)
      }
@@ -114,8 +134,8 @@ export default function FlightSelect() {
 
      return (
           <div suppressHydrationWarning={true} className="bg-white flex flex-col text-black w-full mx-auto p-5 rounded-[4px] items-center justify-between">
-               <div className="flex flex-row w-full mx-auto  rounded-[4px] items-center justify-between">
-                    <div className="flex gap-10 w-fit ">
+               <div className="flex flex-row w-full mx-auto rounded-[4px] items-center justify-around p-2">
+                    <div className="flex gap-10 w-full">
                          <div className="w-1/2">
                               <h3 className="text-sm font-bold">De</h3>
                               <Select onValueChange={(e) => {
@@ -209,7 +229,7 @@ export default function FlightSelect() {
                               </Select>
                          </div>
                     </div>
-                    <div className="flex gap-5 w-fit">
+                    <div className="flex gap-5 w-full">
                          <div className="w-1/2">
                               <p className="text-sm font-bold">De</p>
                               <Popover>
@@ -251,18 +271,63 @@ export default function FlightSelect() {
                               </Popover>
                          </div>
                     </div>
-                    <div>
-                    </div>
-                    <Button onClick={(e) => {
-                         handleSubmit(e)
-                    }} className="bg-amber-400 hover:bg-amber-500">Ache os tickets</Button>
                </div>
-               <div className="flex flex-row w-full mx-auto rounded-[4px] mt-2 gap-10">
-                    <div className="w-fit">
+               <div className="flex flex-row w-full mx-auto rounded-[4px] items-center justify-around p-2">
+                    <div className="w-full">
+                         <h3 className="text-sm font-bold">Classe da cabine</h3>
+                         <div className="flex gap-2 items-center">
+                              <Select
+                                   onValueChange={(e) => {
+                                        setFlightInfos({ ...flightInfos, travel_class: e })
+                                   }}
+                              >
+                                   <SelectTrigger className="border-0 w-fit p-0">
+                                        <SelectValue className="text-sm" placeholder="Selecione a classe" />
+                                   </SelectTrigger>
+                                   <SelectContent className="bg-white text-black gap-2 fixed w-64">
+                                        <SelectItem value="economy" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Economy</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="premium_economy" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Premium Economy</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="business" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Business</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="first" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">First</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                   </SelectContent>
+
+                              </Select>
+                         </div>
+                    </div>
+                    <div className="w-full">
                          <h3 className="text-sm font-bold">Quantas pessoas</h3>
                          <div className="flex gap-2 items-center">
-                              <Drawer >
-                                   <DrawerTrigger className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px]">+</DrawerTrigger>
+                              <Drawer>
+                                   <DrawerTrigger className="flex items-center gap-3 mt-3">
+                                        <div className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px] ">
+                                             +
+                                        </div>
+                                        <span>0</span>
+                                   </DrawerTrigger>
                                    <DrawerContent className="bg-stone-950 border-none flex flex-col gap-5">
                                         <DrawerHeader >
                                              <DrawerTitle className="text-center">Quantas pessoas iram na viagem?</DrawerTitle>
@@ -300,18 +365,19 @@ export default function FlightSelect() {
                                         </div>
 
                                         <DrawerFooter className="w-1/2 mx-auto">
-                                             <Button className="bg-white text-black w-full hover:bg-slate-300 ">Submit</Button>
+                                             <Button className="bg-amber-400 text-white font-bold w-full hover:bg-amber-500 ">Submit</Button>
                                              <DrawerClose>
-                                                  <Button variant="outline" className="w-full">Cancel</Button>
+                                                  <Button variant="outline" className="w-full bg-red-500 border-none hover:bg-red-600">Cancel</Button>
                                              </DrawerClose>
                                         </DrawerFooter>
                                    </DrawerContent>
                               </Drawer>
-                              <p>0</p>
                          </div>
                     </div>
-
                </div>
+               <Button onClick={(e) => {
+                    handleSubmit(e)
+               }} className="bg-amber-400 hover:bg-amber-500 w-full mt-5">Ache os tickets</Button>
           </div>
      );
 }
