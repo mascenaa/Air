@@ -39,8 +39,8 @@ export default function FlightSelect() {
      const [flightInfos, setFlightInfos] = useState<any>({
           from: "",
           to: "",
-          dateI: dateIda,
-          dateV: dateVolta,
+          dateI: "2024-05-10",
+          dateV: "2024-05-18",
           currency: "BRL",
           hl: "pt-br",
           adults: 0,
@@ -94,9 +94,9 @@ export default function FlightSelect() {
 
      useEffect(() => {
           if (typeof window !== "undefined") {
-               if (searchFrom.length > 2) {
+               if (searchFrom) {
                     getSearchAeroportoFrom(searchFrom);
-               } else if (searchTo.length > 2) {
+               } if (searchTo) {
                     getSearchAeroportoTo(searchTo);
                } else {
                     getAeroportos();
@@ -113,19 +113,30 @@ export default function FlightSelect() {
      async function handleSubmit(e: any) {
           e.preventDefault();
 
-          const response = await fetch("/api/search/route", {
+          const response = await fetch("/api/search", {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",
                },
                body: JSON.stringify({
-                    departure_id: "GRU",
-                    arrival_id: "FCO",
-                    outbound: "2024-05-01",
-                    return: "2024-05-10",
-
+                    departure_id: flightInfos.from,
+                    arrival_id: flightInfos.to,
+                    outbound: flightInfos.dateI,
+                    returnDate: flightInfos.dateV,
+                    adults: flightInfos.adults,
+                    children: flightInfos.children,
+                    children_seat: flightInfos.children_seat,
+                    children_lap: flightInfos.children_lap,
+                    travel_class: flightInfos.travel_class,
                }),
-          });
+          })
+               .then((res) => res.json())
+               .then((data) => {
+                    sessionStorage.setItem("searchFlights", JSON.stringify(data));
+                    console.log(data);
+                    window.location.href = "/catalog";
+               })
+
 
           console.log(flightInfos)
      }
@@ -153,7 +164,6 @@ export default function FlightSelect() {
                                                   placeholder="Digite o seu aeroporto favorito"
                                                   onChange={(e) => setSearchFrom(e.target.value)} />
                                              {
-
                                                   aeroportosFrom.length > 0 ?
                                                        aeroportosFrom.map((aeroporto: any) => (
                                                             <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
@@ -326,7 +336,9 @@ export default function FlightSelect() {
                                         <div className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px] ">
                                              +
                                         </div>
-                                        <span>0</span>
+                                        <span>{
+                                             parseInt(flightInfos.adults) + parseInt(flightInfos.children) + parseInt(flightInfos.children_seat) + parseInt(flightInfos.children_lap)
+                                        }</span>
                                    </DrawerTrigger>
                                    <DrawerContent className="bg-stone-950 border-none flex flex-col gap-5">
                                         <DrawerHeader >
@@ -339,28 +351,40 @@ export default function FlightSelect() {
                                                        <h1>Adultos</h1>
                                                        <p className="text-xs">A partir de 11 anos</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.adults} type="number" placeholder="0" onChange={(e) => {
+                                                       setFlightInfos({ ...flightInfos, adults: e.target.value })
+                                                  }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">de 2 a 11 anos</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children: e.target.value })
+                                                       }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">no assento</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children_seat} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children_seat: e.target.value })
+                                                       }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">no colo</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children_lap} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children_lap: e.target.value })
+                                                       }}
+                                                  />
                                              </div>
                                         </div>
 

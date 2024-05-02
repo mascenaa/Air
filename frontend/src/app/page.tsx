@@ -66,14 +66,12 @@ export default function Home() {
               <FlightSelect />
             </div>
             <Suspense>
-              {/* 
-                <Spline 
-                  scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
-                  renderOnDemand={true}
-                />  
-              */}
+              <Spline
+                scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
+                renderOnDemand={true}
+              />
             </Suspense>
-            <div style={{ position: 'absolute', left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
+            <div style={{ position: 'absolute', left: 0, top: '10px', width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
           </div>
         </div>
       </div>
