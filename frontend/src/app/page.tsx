@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import LandingHeader from "@/components/header/header";
@@ -9,27 +9,13 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-
 } from "@/components/ui/carousel"
 import { type CarouselApi } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
-import calcularCoordenadas from "@/lib/calc_routes";
+
+
 
 export default function Home() {
-  const aeroporto1 = { latitude: -23.6256838449846, longitude: -46.65801233873098 }; // Rio de Janeiro (SBRJ)
-  const aeroporto2 = { latitude: -22.814418605698506, longitude: -43.24673719590761 }; // Porto Alegre (SBPA)
-
-  const pontosIntermediarios = calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10);
-
-  console.log(pontosIntermediarios)
-
-  const data = [{
-    name: "random-name",
-    color: [101, 147, 245],
-    path: calcularCoordenadas(aeroporto1.latitude, aeroporto1.longitude, aeroporto2.latitude, aeroporto2.longitude, 10)
-  }
-  ]
-
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
@@ -39,32 +25,35 @@ export default function Home() {
       return
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
-
-    api.on("select", () => {
+    if (typeof window !== "undefined") {
+      setCount(api.scrollSnapList().length)
       setCurrent(api.selectedScrollSnap() + 1)
-    })
 
-    fetch('/api/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        departure_id: "GRU",
-        arrival_id: "JFK",
-        outbound: "2022-12-12",
-        returnDate: "2022-12-20"
+      api.on("select", () => {
+        setCurrent(api.selectedScrollSnap() + 1)
       })
-    }).then(res => res.json()).then(data => {
-      console.log(data)
-    })
+
+    }
+
+    // fetch('/api/search', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     departure_id: "GRU",
+    //     arrival_id: "AEP",
+    //     outbound: "2024-12-12",
+    //     returnDate: "2024-12-20"
+    //   })
+    // }).then(res => res.json()).then(data => {
+    //   console.log(data)
+    // })
   }, [api])
 
 
   return (
-    <section>
+    <section suppressHydrationWarning={true}>
       <LandingHeader />
       <div className="min-h-screen">
         <div>
@@ -76,12 +65,13 @@ export default function Home() {
             <div className="w-full absolute z-[100] top-28">
               <FlightSelect />
             </div>
-            <div>
+            <Suspense>
               <Spline
                 scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
+                renderOnDemand={true}
               />
-            </div>
-            <div style={{ position: 'absolute', top: 15, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
+            </Suspense>
+            <div style={{ position: 'absolute', left: 0, top: '10px', width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
           </div>
         </div>
       </div>
@@ -101,20 +91,22 @@ export default function Home() {
           <Carousel setApi={setApi} className="w-full">
             <CarouselContent className="p-10 gap-0">
               {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index} className="w-fit basis-50">
-                  <Card className="border-none">
-                    <CardContent className="flex flex-col aspect-square items-center justify-center p-6 w-fit ">
-                      <Image src='https://assets.vogue.in/photos/5ce41cfc4a30b3f5c612bf13/2:3/w_2560%2Cc_limit/Your-ultimate-guide-to-Tokyo-Japan1.jpg' alt="" width={300} height={300} />
-                      <div className="flex justify-between w-[300px] mt-2 items-center">
-                        <span className="text-lg font-semibold">Tokyo, Japan</span>
-                        <span className="text-md">R$ 5.530</span>
-                      </div>
-                      <p className="w-[300px] text-xs mt-1 text-[#606060]">
-                        Discover Tokyo, the vibrant capital of Japan! This fascinating city offers a unique blend of old and new, where ultra-modern skyscrapers meet historic temples.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
+                <Suspense key={index} fallback={<div>Loading...</div>}>
+                  <CarouselItem key={index * Math.random()} className="w-fit basis-50">
+                    <Card className="border-none">
+                      <CardContent className="flex flex-col aspect-square items-center justify-center p-6 w-fit ">
+                        <Image src='https://assets.vogue.in/photos/5ce41cfc4a30b3f5c612bf13/2:3/w_2560%2Cc_limit/Your-ultimate-guide-to-Tokyo-Japan1.jpg' alt="" width={300} height={300} />
+                        <div className="flex justify-between w-[300px] mt-2 items-center">
+                          <span className="text-lg font-semibold">Tokyo, Japan</span>
+                          <span className="text-md">R$ 5.530</span>
+                        </div>
+                        <p className="w-[300px] text-xs mt-1 text-[#606060]">
+                          Discover Tokyo, the vibrant capital of Japan! This fascinating city offers a unique blend of old and new, where ultra-modern skyscrapers meet historic temples.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                </Suspense>
               ))}
             </CarouselContent>
           </Carousel>
@@ -128,6 +120,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
