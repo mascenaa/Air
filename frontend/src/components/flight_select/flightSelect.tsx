@@ -26,6 +26,8 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
+import { toast } from "sonner"
+
 
 export default function FlightSelect() {
 
@@ -96,10 +98,9 @@ export default function FlightSelect() {
           if (typeof window !== "undefined") {
                if (searchFrom) {
                     getSearchAeroportoFrom(searchFrom);
-               } if (searchTo) {
+               }
+               if (searchTo) {
                     getSearchAeroportoTo(searchTo);
-               } else {
-                    getAeroportos();
                }
           }
      }, [searchFrom, searchTo]);
@@ -132,9 +133,17 @@ export default function FlightSelect() {
           })
                .then((res) => res.json())
                .then((data) => {
-                    sessionStorage.setItem("searchFlights", JSON.stringify(data));
-                    console.log(data);
-                    window.location.href = "/catalog";
+                    if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "" || flightInfos.travel_class === "" || flightInfos.adults === 0) {
+                         toast("Preencha todos os campos para continuar", { type: "error" })
+                         return
+                    }
+                    else {
+                         sessionStorage.setItem("searchFlights", JSON.stringify(data));
+                         window.location.href = "/catalog";
+                    }
+               })
+               .catch((error) => {
+                    alert('Erro ao buscar os voos')
                })
 
 

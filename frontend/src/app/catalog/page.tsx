@@ -1,6 +1,7 @@
 "use client"
 import FlightSelect from "@/components/flight_select/flightSelect";
 import LandingHeader from "@/components/header/header";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -9,14 +10,22 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { PlaneLanding, PlaneTakeoff } from "lucide-react";
+import { Baby, PlaneLanding, PlaneTakeoff, User } from "lucide-react";
+import { useState } from "react";
 
 
 export default function Catalog() {
-
-
-
     const data = JSON.parse(sessionStorage.getItem('searchFlights') ?? '')
+
+    const [searchMeta, setSearchMeta] = useState({
+        adultos: data.message.search_parameters.adults,
+        criancas: data.message.search_parameters.children,
+        criancas_colo: data.message.search_parameters.infants_in_seat,
+        criancas_lap: data.message.search_parameters.infants_on_lap,
+
+        dataIda: data.message.search_parameters.outbound_date,
+        dataVolta: data.message.search_parameters.return_date,
+    })
 
     console.log(data.message)
     console.log(data.message.best_flights)
@@ -34,6 +43,14 @@ export default function Catalog() {
         return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
+    function formatDate(date: any) {
+        const d = new Date(date);
+        const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+        const month = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : d.getMonth() + 1;
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
 
     return (
         <div>
@@ -43,14 +60,14 @@ export default function Catalog() {
 
             <div className="p-20">
                 <div>
-                    <h1 className="text-xl font-bold text-stone-800">Melhores voos (0)</h1>
+                    <h1 className="text-xl font-bold text-stone-800">Melhores voos ({data.message.best_flights.length})</h1>
                     <div className="my-5">
                         <div>
 
                             {
                                 data.message.best_flights.map((flight: any) => {
                                     return (
-                                        <Card key={Math.random()} className="w-full bg-stone-950">
+                                        <Card key={Math.random()} className="w-full bg-stone-950 my-2">
                                             <CardHeader>
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
@@ -60,75 +77,167 @@ export default function Catalog() {
                                                         <div>
                                                             <CardTitle>Detalhes do Voo</CardTitle>
                                                             <p className="text-sm text-stone-300"> Tempo total de voo: {minuteToHour(flight.total_duration)}</p>
+                                                            <div>
+                                                                <p className="text-sm text-stone-300">Data ida {formatDate(searchMeta.dataIda)} • Data volta {formatDate(searchMeta.dataVolta)}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <CardDescription className="font-bold">{formatValor(flight.price)}</CardDescription>
+                                                    <CardDescription className="font-bold text-right">
+                                                        <p className="line-through">{formatValor(flight.price * 1.6)}</p>
+                                                        <p>{formatValor(flight.price)}</p>
+                                                        <div className="flex flex-end gap-3 mt-2 text-stone-400">
+                                                            <div className="flex gap-1 items-center">
+                                                                <User className="w-5 h-5" />
+                                                                <p>{searchMeta.adultos}</p>
+                                                            </div>
+                                                            <div className="flex gap-1 items-center">
+                                                                <Baby className="w-5 h-5" />
+                                                                <p>{searchMeta.criancas + searchMeta.criancas_colo + searchMeta.criancas_lap}</p>
+                                                            </div>
+                                                        </div>
+                                                    </CardDescription>
                                                 </div>
                                             </CardHeader>
                                             <CardContent>
                                                 {
-                                                    flight.flights.map((f: any) => {
+                                                    flight.flights.map((f: any, i: number) => {
                                                         return (
-                                                            <>
-                                                                <div className="border-l-2 border-l-stone-900 my-2 p-4 ">
-                                                                    <h1 className="text-xl font-bold">{f.airline}</h1>
-                                                                    <p>{f.airplane} • {minuteToHour(f.duration)}</p>
-                                                                    <div>
-                                                                        <div className="text-sm ">
-                                                                            <div>
-                                                                                <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneTakeoff className="w-5 h-5" /> {f.departure_airport.name}</p>
-                                                                            </div>
-                                                                            <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneLanding className="w-5 h-5" /> {f.arrival_airport.name}</p>
+                                                            <div className="border-l-2 border-l-stone-900 my-2 p-4 " key={i * Math.random()}>
+                                                                <h1 className="text-xl font-bold">{f.airline}</h1>
+                                                                <p>{f.airplane} • {minuteToHour(f.duration)}</p>
+                                                                <p>Classe: {f.travel_class}</p>
+                                                                <div>
+                                                                    <div className="text-sm ">
+                                                                        <div>
+                                                                            <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneTakeoff className="w-5 h-5" /> {f.departure_airport.name}</p>
                                                                         </div>
+                                                                        <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneLanding className="w-5 h-5" /> {f.arrival_airport.name}</p>
                                                                     </div>
                                                                 </div>
-                                                            </>
+                                                            </div>
                                                         )
                                                     })
                                                 }
                                             </CardContent>
-                                            <CardFooter>
-                                                <p>teste</p>
+                                            <CardFooter className="flex flex-col justify-start w-full ">
+                                                <ul className="text-left my-5 w-full">
+                                                    {
+                                                        flight.flights.map((f: any, index: number) => {
+                                                            return (
+                                                                <li key={index}>
+                                                                    {
+                                                                        f.extensions[index]
+                                                                    }
+                                                                </li>
+
+                                                            )
+                                                        })
+                                                    }
+                                                </ul>
+                                                <div className="w-full">
+                                                    <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold ">
+                                                        <span>Reservar</span>
+                                                    </Button>
+                                                </div>
                                             </CardFooter>
                                         </Card>
                                     )
                                 })
                             }
-                            <Card className="w-full bg-stone-950">
-                                <CardHeader>
-                                    <CardTitle>Card Title</CardTitle>
-                                    <CardDescription>Card Description</CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Card Content</p>
-                                </CardContent>
-                                <CardFooter>
-                                    <p>Card Footer</p>
-                                </CardFooter>
-                            </Card>
                         </div>
                     </div>
                 </div>
                 <div>
                     <h1 className="text-xl font-bold text-stone-800">Outros voos (0)</h1>
                     <div className="my-5">
-                        <Card className="w-full bg-stone-950">
-                            <CardHeader>
-                                <CardTitle>Card Title</CardTitle>
-                                <CardDescription>Card Description</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Card Content</p>
-                            </CardContent>
-                            <CardFooter>
-                                <p>Card Footer</p>
-                            </CardFooter>
-                        </Card>
+                        {
+                            data.message.other_flights.map((flight: any) => {
+                                return (
+                                    <Card key={Math.random()} className="w-full bg-stone-950 my-2">
+                                        <CardHeader>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="bg-stone-900 rounded-2xl p-2 w-fit">
+                                                        <img src={flight.airline_logo} className="w-10 h-10 rounded-full object-fill" alt="logo" />
+                                                    </div>
+                                                    <div>
+                                                        <CardTitle>Detalhes do Voo</CardTitle>
+                                                        <p className="text-sm text-stone-300"> Tempo total de voo: {minuteToHour(flight.total_duration)}</p>
+                                                        <div>
+                                                            <p className="text-sm text-stone-300">Data ida {formatDate(searchMeta.dataIda)} • Data volta {formatDate(searchMeta.dataVolta)}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <CardDescription className="font-bold text-right">
+                                                    <div>
+                                                        <p className="line-through">{formatValor(flight.price * 2)}</p>
+                                                        <p>{formatValor(flight.price)}</p>
+                                                    </div>
+                                                    <div className="flex flex-end gap-3 mt-2 text-stone-400">
+                                                        <div className="flex gap-1 items-center">
+                                                            <User className="w-5 h-5" />
+                                                            <p>{searchMeta.adultos}</p>
+                                                        </div>
+                                                        <div className="flex gap-1 items-center">
+                                                            <Baby className="w-5 h-5" />
+                                                            <p>{searchMeta.criancas + searchMeta.criancas_colo + searchMeta.criancas_lap}</p>
+                                                        </div>
+                                                    </div>
+                                                </CardDescription>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            {
+                                                flight.flights.map((f: any, index: number) => {
+                                                    return (
+                                                        <div className="border-l-2 border-l-stone-900 my-2 p-4 " key={index * Math.random()}>
+                                                            <h1 className="text-xl font-bold">{f.airline}</h1>
+                                                            <p>{f.airplane} • {minuteToHour(f.duration)}</p>
+                                                            <p>Classe: {f.travel_class}</p>
+                                                            <div>
+                                                                <div className="text-sm ">
+                                                                    <div>
+                                                                        <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneTakeoff className="w-5 h-5" /> {f.departure_airport.name}</p>
+                                                                    </div>
+                                                                    <p className="flex items-center gap-1 text-stone-300 my-2"><PlaneLanding className="w-5 h-5" /> {f.arrival_airport.name}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    )
+                                                })
+                                            }
+                                        </CardContent>
+                                        <CardFooter className="flex flex-col justify-start w-full ">
+                                            <ul className="text-left my-5 w-full">
+                                                {
+                                                    flight.flights.map((f: any, index: number) => {
+                                                        return (
+                                                            <li key={index}>
+                                                                {
+                                                                    f.extensions[index]
+                                                                }
+                                                            </li>
+
+                                                        )
+                                                    })
+                                                }
+                                            </ul>
+                                            <div className="w-full">
+                                                <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold ">
+                                                    <span>Reservar</span>
+                                                </Button>
+                                            </div>
+                                        </CardFooter>
+                                    </Card>
+                                )
+                            })
+                        }
                     </div>
                 </div>
 
 
             </div>
-        </div>
+        </div >
     )
 }

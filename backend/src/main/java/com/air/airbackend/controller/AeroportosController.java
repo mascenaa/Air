@@ -47,10 +47,18 @@ public class AeroportosController {
      @GetMapping("/search/{search}")
      public ResponseEntity<List<Aeroportos>> getAeroportosBySearch(@PathVariable String search) {
           List<Aeroportos> aeroportos = AeroportosService.getAeroportosBySearch(search);
-          if (aeroportos.isEmpty()) {
+          List<Aeroportos> aeroportosCidade = AeroportosService.getAeroportosByCidade(search);
+
+          if (aeroportos.isEmpty() && aeroportosCidade.isEmpty()) {
                return ResponseEntity.noContent().build();
           }
-          return ResponseEntity.ok(aeroportos);
+
+          aeroportos.addAll(aeroportosCidade);
+          aeroportos.removeIf(aeroporto -> aeroporto.getNome().toLowerCase().contains(search.toLowerCase()) == false
+                    && aeroporto.getCidade().toLowerCase().contains(search.toLowerCase()) == false);
+
+          return ResponseEntity.ok(aeroportosCidade);
+
      }
 
 }
