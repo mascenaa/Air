@@ -14,7 +14,7 @@ import {
      PopoverContent,
      PopoverTrigger,
 } from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, ChevronsUpDown } from "lucide-react";
 import ComponentSVGCountry from "@/lib/select_flag";
 import {
      Drawer,
@@ -28,6 +28,16 @@ import {
 } from "@/components/ui/drawer"
 import { toast } from "sonner"
 
+import {
+     Command,
+     CommandEmpty,
+     CommandGroup,
+     CommandInput,
+     CommandItem,
+     CommandDialog,
+} from "@/components/ui/command"
+import { CommandList } from "cmdk";
+
 
 export default function FlightSelect() {
 
@@ -37,12 +47,14 @@ export default function FlightSelect() {
      const [searchTo, setSearchTo] = useState<string>("")
      const [aeroportosFrom, setAeroportosFrom] = useState<any>([])
      const [aeroportosTo, setAeroportosTo] = useState<any>([])
+     const [open, setOpen] = useState(false)
+     const [value, setValue] = useState("")
 
      const [flightInfos, setFlightInfos] = useState<any>({
           from: "",
           to: "",
-          dateI: "2024-05-10",
-          dateV: "2024-05-18",
+          dateI: "2024-05-20",
+          dateV: "2024-05-30",
           currency: "BRL",
           hl: "pt-br",
           adults: 0,
@@ -61,8 +73,8 @@ export default function FlightSelect() {
      async function getAeroportos() {
           const response = await fetch("http://localhost:8080/api/v1/aeroportos")
           const data = await response.json()
-          setAeroportosFrom(data.slice(0, 7))
-          setAeroportosTo(data.slice(0, 7))
+          setAeroportosFrom(data.slice(0, 10))
+          setAeroportosTo(data.slice(0, 10))
      }
 
      async function getSearchAeroportoFrom(search: string) {
@@ -134,8 +146,7 @@ export default function FlightSelect() {
                .then((res) => res.json())
                .then((data) => {
                     if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "" || flightInfos.travel_class === "" || flightInfos.adults === 0) {
-                         toast("Preencha todos os campos para continuar", { type: "error" })
-                         return
+                         toast.error("Preencha todos os campos para continuar")
                     }
                     else {
                          sessionStorage.setItem("searchFlights", JSON.stringify(data));
@@ -143,7 +154,7 @@ export default function FlightSelect() {
                     }
                })
                .catch((error) => {
-                    alert('Erro ao buscar os voos')
+                    toast.error("Não há voos disponíveis para essa rota, tente novamente mais tarde!")
                })
 
 
@@ -190,7 +201,7 @@ export default function FlightSelect() {
                                                                  <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
                                                                       <div className="flex flex-col">
                                                                            <div className="flex items-center gap-2">
-                                                                                <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                                <h4 className="text-xs text-balance text-">Procurando..</h4>
                                                                            </div>
                                                                       </div>
                                                                  </SelectItem>
