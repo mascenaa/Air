@@ -27,7 +27,7 @@
 
 ```mermaid
 sequenceDiagram
-    Participant User as User
+    Actor User as User
     Participant Frontend as Frontend
     Participant Backend as Backend
 
@@ -48,7 +48,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    Participant User as User
+    Actor User as User
     Participant Frontend as Frontend
     Participant Backend as Backend
 
