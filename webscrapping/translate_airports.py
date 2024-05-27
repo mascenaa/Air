@@ -4,7 +4,7 @@ from openai import OpenAI
 import threading
 
 client = OpenAI(
-     api_key="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"
+     api_key=""
 )
 
 def translate_airport(row):
