@@ -26,6 +26,10 @@ public class AeroportosService {
           return aeroportosRepository.findByNomeContaining(search);
      }
 
+     public List<Aeroportos> getAeroportosByCidade(String cidade) {
+          return aeroportosRepository.findByCidade(cidade);
+     }
+
      public Aeroportos getAeroportosById(Long id) {
           return aeroportosRepository.findById(id).orElse(null);
      }

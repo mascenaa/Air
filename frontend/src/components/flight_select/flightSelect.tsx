@@ -14,7 +14,7 @@ import {
      PopoverContent,
      PopoverTrigger,
 } from "@/components/ui/popover"
-import { CalendarIcon, Star } from "lucide-react";
+import { CalendarIcon, ChevronsUpDown } from "lucide-react";
 import ComponentSVGCountry from "@/lib/select_flag";
 import {
      Drawer,
@@ -26,6 +26,7 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
+import { config, getJson } from "serpapi";
 
 
 export default function FlightSelect() {
@@ -36,14 +37,21 @@ export default function FlightSelect() {
      const [searchTo, setSearchTo] = useState<string>("")
      const [aeroportosFrom, setAeroportosFrom] = useState<any>([])
      const [aeroportosTo, setAeroportosTo] = useState<any>([])
+     const [open, setOpen] = useState(false)
+     const [value, setValue] = useState("")
 
      const [flightInfos, setFlightInfos] = useState<any>({
           from: "",
           to: "",
-          dateI: dateIda,
-          dateV: dateVolta,
+          dateI: "2024-05-20",
+          dateV: "2024-05-30",
           currency: "BRL",
-          hl: "pt-br"
+          hl: "pt-br",
+          adults: 0,
+          children: 0,
+          children_seat: 0,
+          children_lap: 0,
+          travel_class: ""
      })
 
      function format(date: Date, format: "full" | "long" | "medium" | "short" | undefined) {
@@ -55,8 +63,8 @@ export default function FlightSelect() {
      async function getAeroportos() {
           const response = await fetch("http://localhost:8080/api/v1/aeroportos")
           const data = await response.json()
-          setAeroportosFrom(data.slice(0, 7))
-          setAeroportosTo(data.slice(0, 7))
+          setAeroportosFrom(data.slice(0, 10))
+          setAeroportosTo(data.slice(0, 10))
      }
 
      async function getSearchAeroportoFrom(search: string) {
@@ -83,28 +91,62 @@ export default function FlightSelect() {
      }
 
      useEffect(() => {
-          getAeroportos()
-     }, [])
+          if (typeof window !== "undefined") {
+               getAeroportos();
+          }
+     }, []);
 
      useEffect(() => {
-          if (searchFrom.length > 2) {
-               getSearchAeroportoFrom(searchFrom)
+          if (typeof window !== "undefined") {
+               if (searchFrom) {
+                    getSearchAeroportoFrom(searchFrom);
+               }
+               if (searchTo) {
+                    getSearchAeroportoTo(searchTo);
+               }
           }
-          else if (searchTo.length > 2) {
-               getSearchAeroportoTo(searchTo)
-          }
-          else {
-               getAeroportos()
-          }
-     }, [searchFrom, searchTo])
+     }, [searchFrom, searchTo]);
 
      useEffect(() => {
-          console.log(flightInfos)
-     }, [flightInfos])
-
+          if (typeof window !== "undefined") {
+               console.log(flightInfos);
+          }
+     }, [flightInfos]);
 
      async function handleSubmit(e: any) {
           e.preventDefault();
+
+          const response = await fetch("/api/search", {
+               method: "POST",
+               headers: {
+                    "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                    departure_id: flightInfos.from,
+                    arrival_id: flightInfos.to,
+                    outbound: flightInfos.dateI,
+                    returnDate: flightInfos.dateV,
+                    adults: flightInfos.adults,
+                    children: flightInfos.children,
+                    children_seat: flightInfos.children_seat,
+                    children_lap: flightInfos.children_lap,
+                    travel_class: flightInfos.travel_class,
+               }),
+          })
+               .then((res) => res.json())
+               .then((data) => {
+                    if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "" || flightInfos.travel_class === "" || flightInfos.adults === 0) {
+                         toast.error("Preencha todos os campos para continuar")
+                    }
+                    else {
+                         sessionStorage.setItem("searchFlights", JSON.stringify(data));
+                         window.location.href = "/catalog";
+                    }
+               })
+               .catch((error) => {
+                    toast.error("Não há voos disponíveis para essa rota, tente novamente mais tarde!")
+               })
+
 
           console.log(flightInfos)
      }
@@ -113,8 +155,8 @@ export default function FlightSelect() {
 
      return (
           <div suppressHydrationWarning={true} className="bg-white flex flex-col text-black w-full mx-auto p-5 rounded-[4px] items-center justify-between">
-               <div className="flex flex-row w-full mx-auto  rounded-[4px] items-center justify-between">
-                    <div className="flex gap-10 w-fit ">
+               <div className="flex flex-row w-full mx-auto rounded-[4px] items-center justify-around p-2">
+                    <div className="flex gap-10 w-full">
                          <div className="w-1/2">
                               <h3 className="text-sm font-bold">De</h3>
                               <Select onValueChange={(e) => {
@@ -132,7 +174,6 @@ export default function FlightSelect() {
                                                   placeholder="Digite o seu aeroporto favorito"
                                                   onChange={(e) => setSearchFrom(e.target.value)} />
                                              {
-
                                                   aeroportosFrom.length > 0 ?
                                                        aeroportosFrom.map((aeroporto: any) => (
                                                             <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
@@ -150,7 +191,7 @@ export default function FlightSelect() {
                                                                  <SelectItem suppressHydrationWarning={true} value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
                                                                       <div className="flex flex-col">
                                                                            <div className="flex items-center gap-2">
-                                                                                <h4 className="text-xs text-balance text-">Não encontrado</h4>
+                                                                                <h4 className="text-xs text-balance text-">Procurando..</h4>
                                                                            </div>
                                                                       </div>
                                                                  </SelectItem>
@@ -208,7 +249,7 @@ export default function FlightSelect() {
                               </Select>
                          </div>
                     </div>
-                    <div className="flex gap-5 w-fit">
+                    <div className="flex gap-5 w-full">
                          <div className="w-1/2">
                               <p className="text-sm font-bold">De</p>
                               <Popover>
@@ -250,18 +291,65 @@ export default function FlightSelect() {
                               </Popover>
                          </div>
                     </div>
-                    <div>
-                    </div>
-                    <Button onClick={(e) => {
-                         handleSubmit(e)
-                    }} className="bg-amber-400 hover:bg-amber-500">Ache os tickets</Button>
                </div>
-               <div className="flex flex-row w-full mx-auto rounded-[4px] mt-2 gap-10">
-                    <div className="w-fit">
+               <div className="flex flex-row w-full mx-auto rounded-[4px] items-center justify-around p-2">
+                    <div className="w-full">
+                         <h3 className="text-sm font-bold">Classe da cabine</h3>
+                         <div className="flex gap-2 items-center">
+                              <Select
+                                   onValueChange={(e) => {
+                                        setFlightInfos({ ...flightInfos, travel_class: e })
+                                   }}
+                              >
+                                   <SelectTrigger className="border-0 w-fit p-0">
+                                        <SelectValue className="text-sm" placeholder="Selecione a classe" />
+                                   </SelectTrigger>
+                                   <SelectContent className="bg-white text-black gap-2 fixed w-64">
+                                        <SelectItem value="economy" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Economy</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="premium_economy" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Premium Economy</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="business" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">Business</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                        <SelectItem value="first" className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                             <div className="flex flex-col p-2">
+                                                  <div className="flex items-center">
+                                                       <h4 className="text-xs text-balance">First</h4>
+                                                  </div>
+                                             </div>
+                                        </SelectItem>
+                                   </SelectContent>
+
+                              </Select>
+                         </div>
+                    </div>
+                    <div className="w-full">
                          <h3 className="text-sm font-bold">Quantas pessoas</h3>
                          <div className="flex gap-2 items-center">
-                              <Drawer >
-                                   <DrawerTrigger className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px]">+</DrawerTrigger>
+                              <Drawer>
+                                   <DrawerTrigger className="flex items-center gap-3 mt-3">
+                                        <div className="bg-amber-400 text-white font-bold px-2 text-md rounded-[2px] ">
+                                             +
+                                        </div>
+                                        <span>{
+                                             parseInt(flightInfos.adults) + parseInt(flightInfos.children) + parseInt(flightInfos.children_seat) + parseInt(flightInfos.children_lap)
+                                        }</span>
+                                   </DrawerTrigger>
                                    <DrawerContent className="bg-stone-950 border-none flex flex-col gap-5">
                                         <DrawerHeader >
                                              <DrawerTitle className="text-center">Quantas pessoas iram na viagem?</DrawerTitle>
@@ -273,44 +361,57 @@ export default function FlightSelect() {
                                                        <h1>Adultos</h1>
                                                        <p className="text-xs">A partir de 11 anos</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.adults} type="number" placeholder="0" onChange={(e) => {
+                                                       setFlightInfos({ ...flightInfos, adults: e.target.value })
+                                                  }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">de 2 a 11 anos</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children: e.target.value })
+                                                       }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">no assento</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children_seat} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children_seat: e.target.value })
+                                                       }} />
                                              </div>
                                              <div className="flex items-center gap-5">
                                                   <div className="w-full">
                                                        <h1>Crianças</h1>
                                                        <p className="text-xs">no colo</p>
                                                   </div>
-                                                  <Input className="bg-stone-800 rounded-2xl" type="number" placeholder="0" />
+                                                  <Input className="bg-stone-800 rounded-2xl" value={flightInfos.children_lap} type="number" placeholder="0"
+                                                       onChange={(e) => {
+                                                            setFlightInfos({ ...flightInfos, children_lap: e.target.value })
+                                                       }}
+                                                  />
                                              </div>
                                         </div>
 
                                         <DrawerFooter className="w-1/2 mx-auto">
-                                             <Button className="bg-white text-black w-full hover:bg-slate-300 ">Submit</Button>
+                                             <Button className="bg-amber-400 text-white font-bold w-full hover:bg-amber-500 ">Submit</Button>
                                              <DrawerClose>
-                                                  <Button variant="outline" className="w-full">Cancel</Button>
+                                                  <Button variant="outline" className="w-full bg-red-500 border-none hover:bg-red-600">Cancel</Button>
                                              </DrawerClose>
                                         </DrawerFooter>
                                    </DrawerContent>
                               </Drawer>
-                              <p>0</p>
                          </div>
                     </div>
-
                </div>
+               <Button onClick={(e) => {
+                    handleSubmit(e)
+               }} className="bg-amber-400 hover:bg-amber-500 w-full mt-5">Ache os tickets</Button>
           </div>
      );
 }

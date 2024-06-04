@@ -14,4 +14,6 @@ public interface AeroportosRepository extends JpaRepository<Aeroportos, Long> {
 
      List<Aeroportos> findByNomeContaining(String nome);
 
+     List<Aeroportos> findByCidade(String cidade);
+
 }

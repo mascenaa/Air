@@ -1,5 +1,6 @@
 package com.air.airbackend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,28 @@ public class AeroportosController {
      @GetMapping("/search/{search}")
      public ResponseEntity<List<Aeroportos>> getAeroportosBySearch(@PathVariable String search) {
           List<Aeroportos> aeroportos = AeroportosService.getAeroportosBySearch(search);
-          if (aeroportos.isEmpty()) {
+          List<Aeroportos> aeroportosCidade = AeroportosService.getAeroportosByCidade(search);
+
+          List<Aeroportos> lista_result = new ArrayList<>();
+
+          if (aeroportos.isEmpty() && aeroportosCidade.isEmpty()) {
                return ResponseEntity.noContent().build();
           }
-          return ResponseEntity.ok(aeroportos);
+
+          lista_result.addAll(aeroportos);
+          lista_result.addAll(aeroportosCidade);
+
+          for (int i = 0; i < lista_result.size(); i++) {
+               for (int j = i + 1; j < lista_result.size(); j++) {
+                    if (lista_result.get(i).getId().equals(lista_result.get(j).getId())) {
+                         lista_result.remove(j);
+                         j--;
+                    }
+               }
+          }
+
+          return ResponseEntity.ok(lista_result);
+
      }
 
 }
