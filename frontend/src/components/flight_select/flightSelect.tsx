@@ -26,7 +26,6 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
-import { config, getJson } from "serpapi";
 
 
 export default function FlightSelect() {
@@ -124,7 +123,7 @@ export default function FlightSelect() {
                                    <SelectTrigger className="border-0 w-fit p-0">
                                         <SelectValue className="text-sm" placeholder="Selecione sua partida" />
                                    </SelectTrigger>
-                                   <SelectContent className="bg-white text-black gap-2 fixed w-64">
+                                   <SelectContent suppressHydrationWarning={true} className="bg-white text-black gap-2 fixed w-64">
                                         <form onSubmit={(e) => {
                                              e.preventDefault()
                                         }}>
@@ -137,7 +136,7 @@ export default function FlightSelect() {
                                                   aeroportosFrom.length > 0 ?
                                                        aeroportosFrom.map((aeroporto: any) => (
                                                             <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
-                                                                 <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                                 <SelectItem suppressHydrationWarning={true} key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
                                                                       <div className="flex flex-col p-2">
                                                                            <div className="flex items-center">
                                                                                 <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
@@ -148,7 +147,7 @@ export default function FlightSelect() {
                                                             </Suspense>
                                                        )) : (
                                                             <Suspense fallback={<div>Loading...</div>}>
-                                                                 <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                                 <SelectItem suppressHydrationWarning={true} value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
                                                                       <div className="flex flex-col">
                                                                            <div className="flex items-center gap-2">
                                                                                 <h4 className="text-xs text-balance text-">Não encontrado</h4>

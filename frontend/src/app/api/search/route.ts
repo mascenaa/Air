@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { config, getJson } from "serpapi";
 
 
 interface SearchRequest {
@@ -20,6 +19,9 @@ export async function GET(request: any) {
 
 export async function POST(request: any) {
      const { departure_id, arrival_id, outbound, return: returnDate }: SearchRequest = request.body;
+
+     console.log(request.body)
+
 
      try {
           try {

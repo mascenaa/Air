@@ -64,7 +64,7 @@ export default function Home() {
 
 
   return (
-    <section suppressHydrationWarning={true}>
+    <>
       <LandingHeader />
       <div className="min-h-screen">
         <div>
@@ -126,13 +126,13 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <div>
-          <h1 className="text-center text-3xl">Track your flight in real time</h1>
-          <p className="text-center text-[#606060] mt-2">
-            Curious to know where your plane is going? Check out our real-time map
-          </p>
-        </div>
+
+        <h1 className="text-center text-3xl">Track your flight in real time</h1>
+        <p className="text-center text-[#606060] mt-2">
+          Curious to know where your plane is going? Check out our real-time map
+        </p>
+
       </div>
-    </section>
+    </>
   );
 }
