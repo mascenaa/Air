@@ -12,10 +12,23 @@ import {
 } from "@/components/ui/card"
 import { Baby, PlaneLanding, PlaneTakeoff, User } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 export default function Catalog() {
     const data = JSON.parse(sessionStorage.getItem('searchFlights') ?? '')
+
+    if (data.message == undefined) {
+        return (
+            <div>
+                <LandingHeader />
+                <h1 className="text-4xl text-center">Flights Result</h1>
+                <div className="p-20">
+                    <h1 className="text-2xl text-center">Nenhum voo encontrado</h1>
+                </div>
+            </div>
+        )
+    }
 
     const [searchMeta, setSearchMeta] = useState({
         adultos: data.message.search_parameters.adults,
@@ -26,12 +39,6 @@ export default function Catalog() {
         dataIda: data.message.search_parameters.outbound_date,
         dataVolta: data.message.search_parameters.return_date,
     })
-
-    console.log(data.message)
-    console.log(data.message.best_flights)
-    console.log(data.message.other_flights)
-    console.log(data.message.price_insights)
-
 
     function minuteToHour(minute: number) {
         const hours = Math.floor(minute / 60);
@@ -51,6 +58,14 @@ export default function Catalog() {
         return `${day}/${month}/${year}`;
     }
 
+    function handleReservar(flight: any) {
+        sessionStorage.setItem('selectedFlight', JSON.stringify(flight));
+        toast.success('Voo reservado com sucesso');
+
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 1500)
+    }
 
     return (
         <div>
@@ -120,22 +135,19 @@ export default function Catalog() {
                                                 }
                                             </CardContent>
                                             <CardFooter className="flex flex-col justify-start w-full ">
-                                                <ul className="text-left my-5 w-full">
+                                                <div className="text-left my-5 w-full">
                                                     {
                                                         flight.flights.map((f: any, index: number) => {
                                                             return (
-                                                                <li key={index}>
-                                                                    {
-                                                                        f.extensions[index]
-                                                                    }
-                                                                </li>
-
+                                                                <p key={index}>
+                                                                    {f.extensions[index]}
+                                                                </p>
                                                             )
                                                         })
                                                     }
-                                                </ul>
+                                                </div>
                                                 <div className="w-full">
-                                                    <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold ">
+                                                    <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold " onClick={() => handleReservar(flight)}>
                                                         <span>Reservar</span>
                                                     </Button>
                                                 </div>
@@ -148,7 +160,7 @@ export default function Catalog() {
                     </div>
                 </div>
                 <div>
-                    <h1 className="text-xl font-bold text-stone-800">Outros voos (0)</h1>
+                    <h1 className="text-xl font-bold text-stone-800">Outros voos ({data.message.other_flights.length})</h1>
                     <div className="my-5">
                         {
                             data.message.other_flights.map((flight: any) => {
@@ -209,22 +221,19 @@ export default function Catalog() {
                                             }
                                         </CardContent>
                                         <CardFooter className="flex flex-col justify-start w-full ">
-                                            <ul className="text-left my-5 w-full">
+                                            <div className="text-left my-5 w-full">
                                                 {
                                                     flight.flights.map((f: any, index: number) => {
                                                         return (
-                                                            <li key={index}>
-                                                                {
-                                                                    f.extensions[index]
-                                                                }
-                                                            </li>
-
+                                                            <p key={index}>
+                                                                {f.extensions[index]}
+                                                            </p>
                                                         )
                                                     })
                                                 }
-                                            </ul>
+                                            </div>
                                             <div className="w-full">
-                                                <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold ">
+                                                <Button className="w-full bg-amber-400 hover:bg-amber-500 font-bold " onClick={() => handleReservar(flight)}>
                                                     <span>Reservar</span>
                                                 </Button>
                                             </div>

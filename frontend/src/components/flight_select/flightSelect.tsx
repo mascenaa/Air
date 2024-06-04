@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import {
      Select,
      SelectContent,
@@ -14,7 +14,7 @@ import {
      PopoverContent,
      PopoverTrigger,
 } from "@/components/ui/popover"
-import { CalendarIcon, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import ComponentSVGCountry from "@/lib/select_flag";
 import {
      Drawer,
@@ -26,13 +26,13 @@ import {
      DrawerTitle,
      DrawerTrigger,
 } from "@/components/ui/drawer"
-import { config, getJson } from "serpapi";
+import { toast } from "sonner";
 
 
 export default function FlightSelect() {
 
-     const [dateIda, setDateIda] = useState<Date>()
-     const [dateVolta, setDateVolta] = useState<Date>()
+     const [dateIda, setDateIda] = useState<Date | undefined>(undefined);
+     const [dateVolta, setDateVolta] = useState<Date | undefined>(undefined);
      const [searchFrom, setSearchFrom] = useState<string>("")
      const [searchTo, setSearchTo] = useState<string>("")
      const [aeroportosFrom, setAeroportosFrom] = useState<any>([])
@@ -43,8 +43,8 @@ export default function FlightSelect() {
      const [flightInfos, setFlightInfos] = useState<any>({
           from: "",
           to: "",
-          dateI: "2024-05-20",
-          dateV: "2024-05-30",
+          dateI: dateIda ? dateIda : "",
+          dateV: dateVolta ? dateVolta : "",
           currency: "BRL",
           hl: "pt-br",
           adults: 0,
@@ -124,8 +124,8 @@ export default function FlightSelect() {
                body: JSON.stringify({
                     departure_id: flightInfos.from,
                     arrival_id: flightInfos.to,
-                    outbound: flightInfos.dateI,
-                    returnDate: flightInfos.dateV,
+                    outbound: dateIda?.toISOString().split("T")[0],
+                    returnDate: dateVolta?.toISOString().split("T")[0],
                     adults: flightInfos.adults,
                     children: flightInfos.children,
                     children_seat: flightInfos.children_seat,
@@ -135,8 +135,9 @@ export default function FlightSelect() {
           })
                .then((res) => res.json())
                .then((data) => {
-                    if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.dateI === "" || flightInfos.dateV === "" || flightInfos.travel_class === "" || flightInfos.adults === 0) {
+                    if (flightInfos.from === "" || flightInfos.to === "" || flightInfos.travel_class === "" || flightInfos.adults === 0) {
                          toast.error("Preencha todos os campos para continuar")
+                         console.log(data)
                     }
                     else {
                          sessionStorage.setItem("searchFlights", JSON.stringify(data));
@@ -150,6 +151,7 @@ export default function FlightSelect() {
 
           console.log(flightInfos)
      }
+
 
 
 
@@ -176,26 +178,26 @@ export default function FlightSelect() {
                                              {
                                                   aeroportosFrom.length > 0 ?
                                                        aeroportosFrom.map((aeroporto: any) => (
-                                                            <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
-                                                                 <SelectItem suppressHydrationWarning={true} key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
-                                                                      <div className="flex flex-col p-2">
-                                                                           <div className="flex items-center">
-                                                                                <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
-                                                                                <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
-                                                                           </div>
+
+                                                            <SelectItem suppressHydrationWarning={true} key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                                 <div className="flex flex-col p-2">
+                                                                      <div className="flex items-center">
+                                                                           <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                           <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
                                                                       </div>
-                                                                 </SelectItem>
-                                                            </Suspense>
+                                                                 </div>
+                                                            </SelectItem>
+
                                                        )) : (
-                                                            <Suspense fallback={<div>Loading...</div>}>
-                                                                 <SelectItem suppressHydrationWarning={true} value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                                      <div className="flex flex-col">
-                                                                           <div className="flex items-center gap-2">
-                                                                                <h4 className="text-xs text-balance text-">Procurando..</h4>
-                                                                           </div>
+
+                                                            <SelectItem suppressHydrationWarning={true} value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                                 <div className="flex flex-col">
+                                                                      <div className="flex items-center gap-2">
+                                                                           <h4 className="text-xs text-balance text-">Procurando..</h4>
                                                                       </div>
-                                                                 </SelectItem>
-                                                            </Suspense>
+                                                                 </div>
+                                                            </SelectItem>
+
                                                        )
                                              }
                                         </form>
@@ -221,26 +223,26 @@ export default function FlightSelect() {
                                              {
                                                   aeroportosTo.length > 0 ?
                                                        aeroportosTo.map((aeroporto: any) => (
-                                                            <Suspense key={Math.floor(Math.random() * 43132)} fallback={<div>Loading...</div>}>
-                                                                 <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
-                                                                      <div className="flex flex-col p-2">
-                                                                           <div className="flex items-center">
-                                                                                <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
-                                                                                <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
-                                                                           </div>
+
+                                                            <SelectItem key={aeroporto.id} value={aeroporto.codigoIata} className="focus:bg-slate-100 w-full transition-all ease-in-out p-0">
+                                                                 <div className="flex flex-col p-2">
+                                                                      <div className="flex items-center">
+                                                                           <ComponentSVGCountry country={aeroporto.pais} className="w-1/5" />
+                                                                           <h4 className="text-xs text-balance text-">{aeroporto.nome} - {aeroporto.codigoIata}</h4>
                                                                       </div>
-                                                                 </SelectItem>
-                                                            </Suspense>
+                                                                 </div>
+                                                            </SelectItem>
+
                                                        )) : (
-                                                            <Suspense fallback={<div>Loading...</div>}>
-                                                                 <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
-                                                                      <div className="flex flex-col">
-                                                                           <div className="flex items-center gap-2">
-                                                                                <h4 className="text-xs text-balance text-">Não encontrado</h4>
-                                                                           </div>
+
+                                                            <SelectItem value={'0'} className="focus:bg-slate-100 w-full transition-all ease-in-out">
+                                                                 <div className="flex flex-col">
+                                                                      <div className="flex items-center gap-2">
+                                                                           <h4 className="text-xs text-balance text-">Não encontrado</h4>
                                                                       </div>
-                                                                 </SelectItem>
-                                                            </Suspense>
+                                                                 </div>
+                                                            </SelectItem>
+
 
                                                        )
                                              }

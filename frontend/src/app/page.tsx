@@ -65,12 +65,12 @@ export default function Home() {
             <div className="w-full absolute z-[100] top-28">
               <FlightSelect />
             </div>
-            <Suspense>
-              <Spline
-                scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
-                renderOnDemand={true}
-              />
-            </Suspense>
+
+            <Spline
+              scene="https://draft.spline.design/l2FblRcD6aprsx82/scene.splinecode"
+              renderOnDemand={true}
+            />
+
             <div style={{ position: 'absolute', left: 0, top: '10px', width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 10 }}></div>
           </div>
         </div>
@@ -120,6 +120,6 @@ export default function Home() {
         </p>
 
       </div>
-    </section >
+    </>
   );
 }

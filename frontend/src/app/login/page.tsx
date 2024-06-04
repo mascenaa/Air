@@ -11,7 +11,7 @@ export default function Login() {
     const [password, setPassword] = useState('')
 
     function handleSubmit() {
-        fetch('http://ec2-18-234-201-68.compute-1.amazonaws.com:8080/api/v1/user/auth', {
+        fetch('http://localhost:8080/api/v1/user/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
