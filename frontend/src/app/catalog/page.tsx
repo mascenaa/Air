@@ -38,6 +38,30 @@ ChartJS.register(
 
 export default function Catalog() {
     const data = JSON.parse(sessionStorage.getItem('searchFlights') ?? '')
+    const [detailsText, setDetailsText] = useState<any>()
+    useEffect(() => {
+        function getDetailsOfTrip() {
+            fetch('/api/details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: `
+                        Você irá criar um mini roteiro de viagem para o pais do aeroporto -> ${data.message.best_flights[0].flights[data.message.best_flights[0].flights.length - 1].arrival_airport.name} .
+                        Começe o texto falando: "Olá viajante! 
+                        Vi que você vai viajar para o aeroporto de ${data.message.best_flights[0].flights[data.message.best_flights[0].flights.length - 1].arrival_airport.name}, 
+                        é um lugar incrível! Confira um roteiro de viagem para você aproveitar ao máximo a sua viagem." e crie um roteiro de viagem com 5 paradas, cada parada deve ter uma descrição de 3 a 5 linhas e uma sugestão de atividade para o viajante fazer.
+                    `
+                })
+            })
+                .then(res => res.json()).then(data => {
+                    setDetailsText(data.message.text)
+                })
+        }
+
+        getDetailsOfTrip();
+    }, [])
 
     if (!data || !data.message) {
         return (
@@ -50,6 +74,7 @@ export default function Catalog() {
             </div>
         );
     }
+
     const [searchMeta, setSearchMeta] = useState({
         adultos: data.message.search_parameters.adults,
         criancas: data.message.search_parameters.children,
@@ -86,6 +111,7 @@ export default function Catalog() {
             window.location.href = '/login';
         }, 1500)
     }
+
 
 
     const prices = data.message.best_flights.map((flight: any) => flight.price);
@@ -160,6 +186,17 @@ export default function Catalog() {
                                 }
                             }}
                         />
+                    </CardContent>
+                </Card>
+                <Card className="w-full bg-stone-950 rounded-xl">
+                    <CardHeader>
+                        <CardTitle>Resumo dessa viagem</CardTitle>
+                        <CardDescription>
+                            Descubra um pouco sobre essa viagem!.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {detailsText ? detailsText : 'Carregando...'}
                     </CardContent>
                 </Card>
             </div>

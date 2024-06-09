@@ -3,9 +3,7 @@ from time import sleep
 from openai import OpenAI
 import threading
 
-client = OpenAI(
-     
-)
+client = OpenAI()
 
 def translate_airport(row):
      response = client.chat.completions.create(
