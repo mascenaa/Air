@@ -1,4 +1,5 @@
 "use client"
+import { useEffect, useRef } from "react";
 import FlightSelect from "@/components/flight_select/flightSelect";
 import LandingHeader from "@/components/header/header";
 import { Button } from "@/components/ui/button";
@@ -13,12 +14,32 @@ import {
 import { Baby, PlaneLanding, PlaneTakeoff, User } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 export default function Catalog() {
     const data = JSON.parse(sessionStorage.getItem('searchFlights') ?? '')
 
-    if (data.message == undefined) {
+    if (!data || !data.message) {
         return (
             <div>
                 <LandingHeader />
@@ -27,9 +48,8 @@ export default function Catalog() {
                     <h1 className="text-2xl text-center">Nenhum voo encontrado</h1>
                 </div>
             </div>
-        )
+        );
     }
-
     const [searchMeta, setSearchMeta] = useState({
         adultos: data.message.search_parameters.adults,
         criancas: data.message.search_parameters.children,
@@ -67,12 +87,82 @@ export default function Catalog() {
         }, 1500)
     }
 
+
+    const prices = data.message.best_flights.map((flight: any) => flight.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    const generatePriceHistory = (min: number, max: number, days: number) => {
+        const priceHistory: { date: string, price: number }[] = [];
+        let currentPrice = min + (max - min) / 2;
+        for (let i = 0; i < days; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() - (days - i));
+            currentPrice += (Math.random() - 0.5) * (max - min) * 0.1;
+            currentPrice = Math.max(min, Math.min(max, currentPrice));
+            priceHistory.push({
+                date: date.toLocaleDateString('pt-BR'),
+                price: currentPrice
+            });
+        }
+        return priceHistory;
+    };
+
+
+    const cachedPriceHistory = JSON.parse(sessionStorage.getItem('priceHistory') ?? 'null');
+    let priceHistory: { date: string, price: number }[];
+
+    if (cachedPriceHistory) {
+
+        priceHistory = cachedPriceHistory;
+    } else {
+        priceHistory = generatePriceHistory(minPrice, maxPrice, 30);
+        sessionStorage.setItem('priceHistory', JSON.stringify(priceHistory));
+    }
+
+    const labels = priceHistory.map(item => item.date);
+    const priceData = priceHistory.map(item => item.price);
+    const last7Days = labels.slice(-10);
+    const last7DaysPriceData = priceData.slice(-10);
+
     return (
         <div>
             <LandingHeader />
 
-            <h1 className="text-4xl text-center">Flights Result</h1>
-
+            <h1 className="text-4xl text-center">Resultado dos Voos</h1>
+            <div className="p-10 flex gap-4">
+                <Card className="w-full bg-stone-950 rounded-xl">
+                    <CardHeader>
+                        <CardTitle>Tendência de preço</CardTitle>
+                        <CardDescription>
+                            Histórico da tendência de preço.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Line
+                            data={{
+                                labels: last7Days,
+                                datasets: [
+                                    {
+                                        label: 'Preço',
+                                        data: last7DaysPriceData,
+                                        fill: false,
+                                        backgroundColor: 'rgb(255, 99, 132)',
+                                        borderColor: 'rgba(255, 99, 132, 0.2)',
+                                    },
+                                ],
+                            }}
+                            options={{
+                                scales: {
+                                    y: {
+                                        beginAtZero: false
+                                    }
+                                }
+                            }}
+                        />
+                    </CardContent>
+                </Card>
+            </div>
             <div className="p-20">
                 <div>
                     <h1 className="text-xl font-bold text-stone-800">Melhores voos ({data.message.best_flights.length})</h1>

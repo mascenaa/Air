@@ -399,12 +399,8 @@ export default function FlightSelect() {
                                                   />
                                              </div>
                                         </div>
+                                        <DrawerFooter className="my-10">
 
-                                        <DrawerFooter className="w-1/2 mx-auto">
-                                             <Button className="bg-amber-400 text-white font-bold w-full hover:bg-amber-500 ">Submit</Button>
-                                             <DrawerClose>
-                                                  <Button variant="outline" className="w-full bg-red-500 border-none hover:bg-red-600">Cancel</Button>
-                                             </DrawerClose>
                                         </DrawerFooter>
                                    </DrawerContent>
                               </Drawer>
@@ -412,6 +408,7 @@ export default function FlightSelect() {
                     </div>
                </div>
                <Button onClick={(e) => {
+                    sessionStorage.removeItem('priceHistory')
                     handleSubmit(e)
                }} className="bg-amber-400 hover:bg-amber-500 w-full mt-5">Ache os tickets</Button>
           </div>
