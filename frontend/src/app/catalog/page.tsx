@@ -37,12 +37,18 @@ ChartJS.register(
 );
 
 export default function Catalog() {
-    const storedData = sessionStorage.getItem('searchFlights');
-    const data = storedData ? JSON.parse(storedData) : null;
     const [detailsText, setDetailsText] = useState<any>()
+    const [data, setData] = useState<any>(null);
+    
    useEffect(() => {
     async function getDetailsOfTrip() {
         if (!data?.message?.best_flights?.length) return;
+
+        if (typeof window !== 'undefined') {
+            const storedData = sessionStorage.getItem('searchFlights');
+            setData(storedData ? JSON.parse(storedData) : null);
+        }
+
 
         try {
             const response = await fetch('/api/details', {
