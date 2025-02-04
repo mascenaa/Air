@@ -7,11 +7,8 @@ export default function DashboardLayout({
      children: React.ReactNode;
 }>) {
 
-     const email = localStorage.getItem('email')
-     const name = localStorage.getItem('name')
-     const id = localStorage.getItem('id')
-     const passagensFavoritas = localStorage.getItem('passagensFavoritas')
-     const pontos = localStorage.getItem('pontos')
+     const name = typeof window !== 'undefined' ? localStorage.getItem('name') : ''
+     const pontos = typeof window !== 'undefined' ? localStorage.getItem('pontos') : ''
 
 
      return (
