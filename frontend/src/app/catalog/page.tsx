@@ -37,31 +37,33 @@ ChartJS.register(
 );
 
 export default function Catalog() {
-    const data = JSON.parse(sessionStorage.getItem('searchFlights') ?? '')
+    const storedData = sessionStorage.getItem('searchFlights');
+    const data = storedData ? JSON.parse(storedData) : null;
     const [detailsText, setDetailsText] = useState<any>()
-    useEffect(() => {
-        function getDetailsOfTrip() {
-            fetch('/api/details', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: `
-                        Você irá criar um mini roteiro de viagem para o pais do aeroporto -> ${data.message.best_flights[0].flights[data.message.best_flights[0].flights.length - 1].arrival_airport.name} .
-                        Começe o texto falando: "Olá viajante! 
-                        Vi que você vai viajar para o aeroporto de ${data.message.best_flights[0].flights[data.message.best_flights[0].flights.length - 1].arrival_airport.name}, 
-                        é um lugar incrível! Confira um roteiro de viagem para você aproveitar ao máximo a sua viagem." e crie um roteiro de viagem com 5 paradas, cada parada deve ter uma descrição de 3 a 5 linhas e uma sugestão de atividade para o viajante fazer.
-                    `
-                })
-            })
-                .then(res => res.json()).then(data => {
-                    setDetailsText(data.message.text)
-                })
-        }
+   useEffect(() => {
+    async function getDetailsOfTrip() {
+        if (!data?.message?.best_flights?.length) return;
 
-        getDetailsOfTrip();
-    }, [])
+        try {
+            const response = await fetch('/api/details', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: `Olá viajante! Vi que você vai viajar para o aeroporto de ${data.message.best_flights[0].flights.at(-1).arrival_airport.name}, confira um roteiro para aproveitar sua viagem!`
+                }),
+            });
+
+            const result = await response.json();
+            setDetailsText(result.message.text);
+        } catch (error) {
+            console.error("Erro ao buscar detalhes da viagem:", error);
+            setDetailsText("Não foi possível carregar o roteiro.");
+        }
+    }
+
+    getDetailsOfTrip();
+}, [data]);
+
 
     if (!data || !data.message) {
         return (
