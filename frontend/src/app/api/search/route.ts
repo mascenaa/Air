@@ -9,13 +9,6 @@ interface SearchRequest {
      returnDate: string;
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-     if (req.method === 'POST') {
-          console.log(req.body)
-     } else {
-          // Handle any other HTTP method
-     }
-}
 
 export async function POST(req: Request, res: NextApiResponse) {
 
